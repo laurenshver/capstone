@@ -4,10 +4,13 @@
 
     </head>
     <body>
-        
+        <p>Employees</p>
+        <p>testing??!!</p>
         <ul>
-        {% for customer in employee_list%}
-        <li>{{customer}}</li>
+        {% for employee in employee_list%}
+        <li>{{employee.EmployeeID}}</li>
+        <li>{{employee.FirstName}}</li>
+        <li>{{employee.LastName}}</li>
         {% endfor %}
         </ul>
     </body>
