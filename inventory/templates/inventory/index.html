@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        
+        <ul>
+        {% for tool in inventory_list%}
+        <li>{{tool.NumToolAvailable}}</li>
+        <li>{{tool.ToolID}}</li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>
