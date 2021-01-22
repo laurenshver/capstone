@@ -39,12 +39,11 @@ class Employee(models.Model):
     PositionID = models.ForeignKey('EmployeeRole', on_delete=models.CASCADE)
     FirstName = models.CharField(max_length = 100)
     LastName = models.CharField(max_length = 100)
-    EmployeeEmail = models.CharField(max_length = 100, blank=True, default=None)
+    EmployeeEmail = models.CharField(max_length = 100, blank=True)
     EmployeePhoneNum = models.CharField(max_length = 100, blank=True, default=None)
 
     def __str__(self):
-        return self.FirstName + " " + self.LastName + " (" + self.PositionID.PositionName + ")"
-
+        return self.FirstName + " " + self.LastName + " (" + self.PositionID.PositionName + ")"  
 
 class EmployeeRole(models.Model):
     PositionID = models.AutoField(primary_key=True)

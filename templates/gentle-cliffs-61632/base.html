@@ -7,13 +7,14 @@
     {% comment %} menu bar for entire application {% endcomment %}
     <body class= menubody>
         <ul class= menubar>
-            <li class= menuitem><a>Home</a></li>
-            <li class= menuitem><a>Inventory</a></li>
-            <li class= menuitem><a>Customers</a></li>
-            <li class= menuitem><a>Businesses</a></li>
-            <li class= menuitem><a>Quotes</a></li>
-            <li class= menuitem><a>Orders</a></li>
-            <li class= menuitem><a>Admin</a></li>
+            <li class= menuitem><a href = '/' >Home</a></li>
+            <li class= menuitem><a href = "/inventory/">Inventory</a></li>
+            <li class= menuitem><a href = '/customer/' >Customers</a></li>
+            {% comment %} <li class= menuitem><a>Businesses</a></li> {% endcomment %}
+            <li class= menuitem><a href = '/quote/' >Quotes</a></li>
+            <li class= menuitem><a href = '/order/' >Orders</a></li>
+            <li class= menuitem><a href = '/retail/' >Retail</a></li>
+            <li class= menuitem><a href = '/admin/' >Admin</a></li>
             <li id = "new-order"><a>New Order +</a></li>
         </ul>
 

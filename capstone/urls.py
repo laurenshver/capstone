@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('customer/', include('customer.urls')),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('inventory/', include('inventory.urls')),
     path('quote/', include('quote.urls')),
     path('order/', include('order.urls')),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
