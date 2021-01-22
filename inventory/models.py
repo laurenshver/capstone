@@ -55,7 +55,7 @@ class Inventory(models.Model):
     DailyOverduePrice = models.DecimalField(max_digits=10, decimal_places=2)
     WeeklyOverduePrice = models.DecimalField(max_digits=10, decimal_places=2)
     MonthlyOverduePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    PictureURL = models.CharField(max_length = 100, blank=True)
+    ToolPicture = models.ImageField(null=True, blank=True)
     NumToolInInventory = models.PositiveSmallIntegerField()
     NumToolAvailable = models.PositiveSmallIntegerField()
     TimesRented = models.PositiveSmallIntegerField(default=0)

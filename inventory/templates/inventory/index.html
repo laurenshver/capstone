@@ -4,12 +4,16 @@
 
     </head>
     <body>
-        
+        {% extends "retail/app_base.html" %}
+        {% block content %}
         <ul>
-        {% for tool in inventory_list%}
+        {% for tool in inventory_list %}
         <li>{{tool.NumToolAvailable}}</li>
         <li>{{tool.ToolID}}</li>
-        {% endfor %}
         </ul>
+        <img src = {{tool.ToolPicture.url}} alt= "placeholder">
+        {% endfor %}
+        {% endblock content %}
+        
     </body>
 </html>
