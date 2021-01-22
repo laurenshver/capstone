@@ -4,6 +4,9 @@
 
     </head>
     <body>
+    {% extends "retail/app_base.html" %}
+    {% block content %}
+    
         <p>Employees</p>
         <p>testing adding to this line</p>
         <p>adding another line just to see</p>
@@ -14,5 +17,6 @@
         <li>{{employee.LastName}}</li>
         {% endfor %}
         </ul>
+        {% endblock content %}
     </body>
 </html>

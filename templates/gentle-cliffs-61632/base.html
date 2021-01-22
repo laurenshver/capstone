@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type = "text/css" href="{% static 'css/menu.css' %}">
+    </head>
+    {% comment %} menu bar for entire application {% endcomment %}
+    <body class= menubody>
+        <ul class= menubar>
+            <li class= menuitem><a>Home</a></li>
+            <li class= menuitem><a>Inventory</a></li>
+            <li class= menuitem><a>Customers</a></li>
+            <li class= menuitem><a>Businesses</a></li>
+            <li class= menuitem><a>Quotes</a></li>
+            <li class= menuitem><a>Orders</a></li>
+            <li id = "new-order"><a>New Order +</a></li>
+        </ul>
+
+    {% block content %}
+    
+    {% endblock content %}
+
+    </body>
+</html>
+
+{% comment %} https://coolors.co/355070-6d597a-c38391-e56b6f-eaac8b colour scheme? {% endcomment %}
