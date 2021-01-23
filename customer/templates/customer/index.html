@@ -4,7 +4,8 @@
 
     </head>
     <body>
-        
+        {% extends "quote/app_base.html" %}
+        {% block content %}
         <ul>
         {% for customer in customer_list%}
         <li>{{customer.Address}}</li>
@@ -12,5 +13,7 @@
         <li>{{customer.DateCreated}}</li>
         {% endfor %}
         </ul>
+        {% endblock content %}
+        
     </body>
 </html>
