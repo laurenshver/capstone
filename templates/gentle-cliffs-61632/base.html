@@ -3,6 +3,7 @@
 <html>
     <head>
         <link rel="stylesheet" type = "text/css" href="{% static 'css/menu.css' %}">
+        <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
     </head>
     {% comment %} menu bar for entire application {% endcomment %}
     <body class= menubody>
@@ -21,6 +22,51 @@
     
     {% endblock content %}
 
+    <div class="footer">
+        <div class="row">
+            <div class="column-3">
+                <h3>Site Map</h3>
+                
+                <p><a href = '/order/' >Home</a></p>
+                <p><a href = "/inventory/">Inventory</a></p>
+                <p><a href = '/customer/' >Customers</a></p>
+                <p><a href = '/quote/' >Quotes</a></p>
+                <p><a href = '/order/' >Orders</a></p>
+                <p><a href = '/retail/' >Retail</a></p>
+            </div>
+            <div class="column-3">
+                <h3>ATSR HQ</h3>
+                <div class="row">
+                    <div class = "column-2">
+                        <img src="{% static 'images/logo-placeholder.png' %}" alt="logo" height="200">
+                    </div>
+                    <div class = "column-2">
+                        <p>CEO name</p>
+                        <p>Address</p>
+                        <p>City</p>
+                        <p>Province, Postalcode</p>
+                        <p>Phone Number</p>
+                        <p>Email</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column-3">
+                <h3>About Solution</h3>
+                <div class="row">
+                    <div class = "column-2">
+                        <img src="{% static 'images/logo-placeholder.png' %}" alt=" skydive-logo" height="200">
+                    </div>
+                    <div class = "column-2">
+                        <p><strong>BTM Capstone Project</strong>  <br> Ryerson University <br> ITM 90A/B 2020/2021</p>
+                        
+                        <p><strong>Designers:</strong><br> Nadia Balram Roy <br> Reem Kaid<br> Lauren Shver</p>
+                        <a href="https://github.com/laurenshver/capstone" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </body>
 </html>
 

@@ -36,3 +36,42 @@ li a:hover {
 #new-order a:hover{
     background-color: #c38391;
 }
+
+/* footer */
+.footer{
+    background-color: #355070;
+    color: white;
+    padding: 2%;
+}
+
+.column-3{
+    float: left;
+    width: 33.33%;
+    text-align: center;
+}
+
+.column-2{
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+  
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+i{
+    color: #b56576;
+}
+
+h3{
+    color:#c38391;
+}
+
+p a {
+    color: white;
+    text-decoration: none;
+}
