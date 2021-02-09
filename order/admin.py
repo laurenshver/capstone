@@ -5,3 +5,6 @@ from .models import *
 admin.site.register(Order)
 admin.site.register(OrderTool)
 admin.site.register(ExtraFeeSchedule)
+admin.site.register(Payment)
+admin.site.register(PaymentInformation)
+admin.site.register(Invoice)

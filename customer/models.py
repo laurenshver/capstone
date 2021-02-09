@@ -1,6 +1,24 @@
 from django.db import models
 
 # Create your models here.
+class Address(models.Model):
+    ADDRESS_TYPE = (
+        ('C', 'Customer'),
+        ('B', 'Business'),
+        ('Bi', 'Billing'),
+        ('D', 'Delivery'),
+        ('S', 'Store'),
+    )
+    AddressID = models.AutoField(primary_key = True)
+    AddressType = models.CharField(max_length = 2, choices = ADDRESS_TYPE)
+    Address = models.CharField(max_length = 100)
+    City = models.CharField(max_length = 100)
+    Province = models.CharField(max_length = 100)
+    PostalCode = models.CharField(max_length = 100)
+    PhoneNumber = models.CharField(max_length = 30)
+
+    def __str__(self):
+        return self.Address + "(" + self.AddressType + ")"
 
 class BusinessDiscountSchedule(models.Model):
     BusinessDiscountID = models.AutoField(primary_key = True)
@@ -24,26 +42,16 @@ class Customer(models.Model):
         ('B', 'Business'),
     )
     CustomerID = models.AutoField(primary_key=True)
+    BusinessDiscountID = models.ForeignKey(BusinessDiscountSchedule, on_delete=models.CASCADE, blank = True, null = True)
+    AddressID = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null = True)
     DateCreated = models.DateField(auto_now_add=True)
     FirstName = models.CharField(max_length = 100)
     LastName = models.CharField(max_length = 100, blank = True, null = True)
     CustomerType = models.CharField(max_length = 2, choices = CUSTOMER_TYPE, default = 'C', blank = True, null = True)
-    BusinessDiscountID = models.ForeignKey(BusinessDiscountSchedule, on_delete=models.CASCADE, blank = True, null = True)
-    Address = models.CharField(max_length = 100)
-    City = models.CharField(max_length = 100)
-    Province = models.CharField(max_length = 100)
-    PostalCode = models.CharField(max_length = 100)
     HomeNumber = models.CharField(max_length = 20, blank=True, default=None)
     CellNumber = models.CharField(max_length = 20, blank = True)
     BusinessNumber = models.CharField(max_length = 20, blank = True)
-    EmailAddress = models.CharField(max_length = 100)
-    CreditCardNumber = models.CharField(max_length = 100, blank = True)
-    CreditCardType = models.CharField(max_length = 100, blank = True)
-    CreditCardName = models.CharField(max_length = 100, blank = True)
-    BillingAddress = models.CharField(max_length = 100)
-    BillingCity = models.CharField(max_length = 100)
-    BillingProvince = models.CharField(max_length = 100)
-    BillingPostalCode = models.CharField(max_length = 100)
+    EmailAddress = models.CharField(max_length = 100, blank = True, null = True)
     BusinessPrimaryContact = models.CharField(max_length = 100, blank = True)
     BusinessPrimaryContactPhoneNumber = models.CharField(max_length = 100, blank = True)
     BusinessPrimaryContactEmail = models.CharField(max_length = 100, blank = True)

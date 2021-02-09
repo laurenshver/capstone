@@ -1,12 +1,10 @@
 from django.db import models
+from customer.models import Address
 
 # Create your models here.
 class HQ(models.Model):
+    AddressID = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null = True)
     HQname = models.CharField(max_length = 100)
-    Address = models.CharField(max_length = 100)
-    City = models.CharField(max_length = 100)
-    Province = models.CharField(max_length = 100)
-    PostalCode = models.CharField(max_length = 100)
     PhoneNumber = models.CharField(max_length = 100)
     EmailAddress = models.CharField(max_length = 100)
     # foreign key to employee id for CEO
@@ -18,11 +16,8 @@ class HQ(models.Model):
 
 class Store(models.Model):
     StoreID = models.AutoField(primary_key=True)
+    AddressID = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null = True)
     StoreName = models.CharField(max_length = 100)
-    Address = models.CharField(max_length = 100)
-    City = models.CharField(max_length = 100)
-    Province = models.CharField(max_length = 100)
-    PostalCode = models.CharField(max_length = 100)
     PhoneNumber = models.CharField(max_length = 100)
     NumberExt = models.CharField(max_length = 100)
     # fk manager

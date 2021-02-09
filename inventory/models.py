@@ -3,42 +3,34 @@ from retail.models import Store
 from django.forms import ModelForm
 
 # Create your models here.
-class Inventory(models.Model):
-    TOOL_CONDITIONS = (
-        ('G', 'GOOD'),
-        ('DR', 'DAMAGE/REPAIR'),
-        ('D', 'DAMAGED'),
-    )
-    DECOMISSIONED = (
-        ('Y', 'YES'),
-        ('N', 'NO'),
-    )
-    TOOL_CATEGORIES = (
-        ('1', 'Shovels, Picks, Long Handled Tools'),
-        ('2', 'HVAC Equipment'),
-        ('3', 'Concrete and Masonry Equipment'),
-        ('4', 'Drilling and Drilling Accessories'),
-        ('5', 'Floor Care and Sanding'),
-        ('6', 'Scaffolding'),
-        ('7', 'Other')
+TOOL_CATEGORIES = (
+    ('1', 'Shovels, Picks, Long Handled Tools'),
+    ('2', 'HVAC Equipment'),
+    ('3', 'Concrete and Masonry Equipment'),
+    ('4', 'Drilling and Drilling Accessories'),
+    ('5', 'Floor Care and Sanding'),
+    ('6', 'Scaffolding'),
+    ('7', 'Other')
     )
 
-    TOOL_SUB_CATEGORIES = (
-        ('1.1', 'Rental Bars'),
-        ('1.2', 'Forks and Rakes'),
-        ('1.3', 'Picks and Handles'),
-        ('2.1', 'Dehumidifiers'),
-        ('2.2', 'Heaters'),
-        ('3.1', 'Concrete Grinders and Surface Prep'),
-        ('3.2', 'Sawing and Drilling Equipment'),
-        ('4.1', 'Drill Bit Sets'),
-        ('4.2', 'Annular Cutting Sets'),
-        ('5.1', 'Sanders & Edgers'),
-        ('5.2', 'Polishers'),
-        ('5.3', 'Grinders'),
-        ('6.1', 'Scafolding Towers'),
-        ('7.1', 'Other'),
+TOOL_SUB_CATEGORIES = (
+    ('1.1', 'Rental Bars'),
+    ('1.2', 'Forks and Rakes'),
+    ('1.3', 'Picks and Handles'),
+    ('2.1', 'Dehumidifiers'),
+    ('2.2', 'Heaters'),
+    ('3.1', 'Concrete Grinders and Surface Prep'),
+    ('3.2', 'Sawing and Drilling Equipment'),
+    ('4.1', 'Drill Bit Sets'),
+    ('4.2', 'Annular Cutting Sets'),
+    ('5.1', 'Sanders & Edgers'),
+    ('5.2', 'Polishers'),
+    ('5.3', 'Grinders'),
+    ('6.1', 'Scafolding Towers'),
+    ('7.1', 'Other'),
     )
+
+class Inventory(models.Model):
     ToolID = models.AutoField(primary_key=True)
     # store ID FK
     StoreID = models.ForeignKey(Store, on_delete=models.CASCADE)
@@ -58,12 +50,33 @@ class Inventory(models.Model):
     ToolPicture = models.ImageField(null=True, blank=True)
     NumToolInInventory = models.PositiveSmallIntegerField()
     NumToolAvailable = models.PositiveSmallIntegerField()
-    TimesRented = models.PositiveSmallIntegerField(default=0)
-    ConditionRating = models.CharField(max_length = 100, default='G', choices = TOOL_CONDITIONS)
-    Decomissioned = models.CharField(max_length = 100, default='N', choices = DECOMISSIONED)
+    NumToolRented = models.PositiveSmallIntegerField(blank = True, null = True, default = 0)
+    
 
     def __str__(self):
         return self.ToolName + " (" + self.ToolBrand + ")"
+
+class ToolCondition(models.Model):
+    TOOL_CONDITIONS = (
+        ('G', 'GOOD'),
+        ('DR', 'DAMAGE/REPAIR'),
+        ('D', 'DAMAGED'),
+    )
+    DECOMISSIONED = (
+        ('Y', 'YES'),
+        ('N', 'NO'),
+    )
+
+    ToolID = models.ForeignKey( Inventory, on_delete=models.CASCADE)
+    DateCreated = models.DateField(auto_now_add=True)
+    ToolNumber = models.PositiveSmallIntegerField()
+    TimesRented = models.PositiveSmallIntegerField( default = 0)
+    ConditionRating = models.CharField(max_length = 10, choices = TOOL_CONDITIONS, default = 'G')
+    Decomissioned = models.CharField(max_length = 10, choices = DECOMISSIONED, default = 'N')
+    DateDecomissioned = models.DateField(blank = True, null = True)
+
+    def __str__(self):
+        return self.ToolID.ToolName + " (" + str(self.ToolID.ToolBrand) + ") #" + str(self.ToolNumber) 
 
 class InventoryForm(ModelForm):
     class Meta:

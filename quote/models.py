@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import timedelta, datetime
 from inventory.models import Inventory
-from customer.models import Customer
+from customer.models import Customer, Address
 from retail.models import Store
 
 def two_business_days():
@@ -31,6 +31,7 @@ class Quote(models.Model):
     QuoteID = models.AutoField(primary_key = True)
     CustomerID = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True)
     StoreID = models.ForeignKey(Store, on_delete=models.CASCADE, blank=True)
+    AddressID = models.ForeignKey(Address, on_delete=models.CASCADE, blank=True, null = True)
     DateCreated = models.DateField(auto_now_add=True)
     Expired = models.CharField(max_length = 10, choices = yn, default = 'N')
     ExpiryDate = models.DateField(default = two_business_days, editable = False)
@@ -39,10 +40,6 @@ class Quote(models.Model):
     CustomerEmail = models.CharField(max_length = 100, blank = True)
     CustomerPhoneNumber = models.CharField(max_length = 100, blank = True)
     ProjectType = models.CharField(max_length = 100, blank = True)
-    BusinessProjectAddress = models.CharField(max_length = 100, blank = True)
-    BusinessProjectCity = models.CharField(max_length = 100, blank = True)
-    BusinessProjectProvince = models.CharField(max_length = 100, blank = True)
-    BusinessProjectPostalCode = models.CharField(max_length = 100, blank = True)
     BusinessProjectManager = models.CharField(max_length = 100, blank = True)
     BusinessProjectManagerContact = models.CharField(max_length = 100, blank = True)
     DesiredStartDate = models.DateField(auto_now=True)

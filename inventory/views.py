@@ -8,7 +8,5 @@ def index(request):
     context = {'inventory_list' : inventory }
     return render(request, 'inventory/index.html', context)
 
-def create_tool(request):
-    x = InventoryForm()
-    return render(request, 'inventory/create_tool.html', {'form':x})
+
 
