@@ -1,0 +1,35 @@
+.column-4 {
+    float: left;
+    width: 25%;
+}
+
+.column-3 {
+    float: left;
+    width: 33.3333%
+}
+
+.column-2 {
+    float: left;
+    width: 50%;
+}
+
+.column-three-q {
+    float: left;
+    width: 75%;
+}
+
+.column-5 {
+    float: left;
+    width: 20%;
+}
+
+.column-sixty {
+    float: left;
+    width: 60%;
+}
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

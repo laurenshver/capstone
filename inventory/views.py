@@ -5,7 +5,7 @@ from .models import *
 # Create your views here.
 def index(request):
     inventory = Inventory.objects.all()
-    context = {'inventory_list' : inventory }
+    context = {'tool_list' : inventory }
     return render(request, 'inventory/index.html', context)
 
 

@@ -1,0 +1,45 @@
+h1{
+   color: #355070;
+   text-align: center;
+}
+
+.header{
+    text-align: center;
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    background-color: #f8f9fa;
+}
+
+.details{
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    background-color: #f8f9fa;
+}
+
+img{
+    height: 100pt;
+}
+
+.column-5{
+    text-align: center;
+}
+
+.price{
+    line-height: 200px;
+    height: 200px;
+}
+
+button{
+    background-color:#6d597a ;
+    padding: 8px;
+    border: 1px solid #6d597a;
+    border-radius: 6px;
+    color: white;
+}

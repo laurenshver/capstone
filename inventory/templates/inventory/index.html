@@ -1,18 +1,35 @@
+{% extends "retail/app_base.html" %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html>
     <head>
-
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ATSR Inventory</title>
+        <link rel="stylesheet" type = "text/css" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" type = "text/css" href="{% static 'css/tool.css' %}">
     </head>
     <body>
-        {% extends "retail/app_base.html" %}
-        {% block content %}
-        <ul>
-        {% for tool in inventory_list %}
-        <li>{{tool.NumToolAvailable}}</li>
-        <li>{{tool.ToolID}}</li>
-        </ul>
-        <img src = {{tool.ToolPicture.url}} alt= "placeholder">
-        {% endfor %}
+        
+        <h1>Tools</h1>
+        <div class="row">
+            <div class="column-5" style="visibility: hidden;">hidden</div>
+            <div class="column-sixty">
+                <div class="row">
+                {% for tool in tool_list %}
+                    <div class="column-3">
+                        <img src={{tool.ToolPicture.url}} alt="picture" height="150px">
+                        <p><strong>{{tool.ToolName}}</strong></p>
+                        <strong>{{tool.ToolBrand}}</strong><br><br>
+                        <button>Add to Order</button>
+                    </div>
+                {% endfor %} 
+                </div>
+            </div>
+            <div class="column-5" style="visibility: hidden;">hidden</div>
+        </div>
         {% endblock content %}
         
     </body>
