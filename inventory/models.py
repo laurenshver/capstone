@@ -1,89 +1,90 @@
 from django.db import models
 from retail.models import Store
-from django.forms import ModelForm
+from django.utils.timezone import now
 
 # Create your models here.
-TOOL_CATEGORIES = (
-    ('1', 'Shovels, Picks, Long Handled Tools'),
-    ('2', 'HVAC Equipment'),
-    ('3', 'Concrete and Masonry Equipment'),
-    ('4', 'Drilling and Drilling Accessories'),
-    ('5', 'Floor Care and Sanding'),
-    ('6', 'Scaffolding'),
-    ('7', 'Other')
-    )
+YN = (
+        ('Y', 'YES'),
+        ('N', 'NO'),
+)
 
-TOOL_SUB_CATEGORIES = (
-    ('1.1', 'Rental Bars'),
-    ('1.2', 'Forks and Rakes'),
-    ('1.3', 'Picks and Handles'),
-    ('2.1', 'Dehumidifiers'),
-    ('2.2', 'Heaters'),
-    ('3.1', 'Concrete Grinders and Surface Prep'),
-    ('3.2', 'Sawing and Drilling Equipment'),
-    ('4.1', 'Drill Bit Sets'),
-    ('4.2', 'Annular Cutting Sets'),
-    ('5.1', 'Sanders & Edgers'),
-    ('5.2', 'Polishers'),
-    ('5.3', 'Grinders'),
-    ('6.1', 'Scafolding Towers'),
-    ('7.1', 'Other'),
-    )
+class ToolCategory(models.Model):
+    ToolCategory = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)
 
-class Inventory(models.Model):
+    def __str__(self):
+        return self.ToolCategory
+
+class ToolSubCategory(models.Model):
+    ToolCategoryID = models.ForeignKey(ToolCategory, on_delete=models.CASCADE)
+    ToolSubCategory = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.ToolSubCategory
+
+class ToolStatus(models.Model):
+    ToolStatus = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.ToolStatus
+
+class ToolCondition(models.Model):
+    ToolCondition = models.CharField(max_length = 100)
+    ToolConditionDescription = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)   
+
+    def __str__(self):
+        return self.ToolCondition
+
+class PriceRate(models.Model):
+    PriceRate = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.PriceRate
+
+class Tool(models.Model):
     ToolID = models.AutoField(primary_key=True)
-    # store ID FK
-    StoreID = models.ForeignKey(Store, on_delete=models.CASCADE)
+    ToolCategoryID = models.ForeignKey(ToolCategory, on_delete=models.CASCADE)
+    ToolSubCategoryID = models.ForeignKey(ToolSubCategory, on_delete=models.CASCADE)
+    DateCreated = models.DateField(auto_now_add=True)
     ToolName = models.CharField(max_length = 100)
     ToolBrand = models.CharField(max_length = 100)
-    ToolCategory = models.CharField(max_length = 100, choices = TOOL_CATEGORIES)
-    ToolSubCategory = models.CharField(max_length = 100, choices = TOOL_SUB_CATEGORIES)
-    ToolDescription = models.TextField(blank = True, default= "")
-    HourlyPrice = models.DecimalField(max_digits=10, decimal_places=2)
-    DailyPrice = models.DecimalField(max_digits=10, decimal_places=2)
-    WeeklyPrice = models.DecimalField(max_digits=10, decimal_places=2)
-    MonthlyPrice = models.DecimalField(max_digits=10, decimal_places=2)
-    HourlyOverduePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    DailyOverduePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    WeeklyOverduePrice = models.DecimalField(max_digits=10, decimal_places=2)
-    MonthlyOverduePrice = models.DecimalField(max_digits=10, decimal_places=2)
     ToolPicture = models.ImageField(null=True, blank=True)
-    NumToolInInventory = models.PositiveSmallIntegerField()
-    NumToolAvailable = models.PositiveSmallIntegerField()
-    NumToolRented = models.PositiveSmallIntegerField(blank = True, null = True, default = 0)
-    
+    ItemDescription = models.TextField(blank = True, default= "")
+    ModifiedDate = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.ToolName + " (" + self.ToolBrand + ")"
 
-class ToolCondition(models.Model):
-    TOOL_CONDITIONS = (
-        ('G', 'GOOD'),
-        ('DR', 'DAMAGE/REPAIR'),
-        ('D', 'DAMAGED'),
-    )
-    DECOMISSIONED = (
-        ('Y', 'YES'),
-        ('N', 'NO'),
-    )
 
-    ToolID = models.ForeignKey( Inventory, on_delete=models.CASCADE)
-    DateCreated = models.DateField(auto_now_add=True)
-    ToolNumber = models.PositiveSmallIntegerField()
-    TimesRented = models.PositiveSmallIntegerField( default = 0)
-    ConditionRating = models.CharField(max_length = 10, choices = TOOL_CONDITIONS, default = 'G')
-    Decomissioned = models.CharField(max_length = 10, choices = DECOMISSIONED, default = 'N')
+class Inventory(models.Model):
+    InventoryID = models.AutoField(primary_key = True)
+    StoreID = models.ForeignKey(Store, on_delete=models.CASCADE)
+    ToolID = models.ForeignKey(Tool, on_delete=models.CASCADE)
+    ToolStatusID = models.ForeignKey(ToolStatus, on_delete=models.CASCADE)
+    ToolConditionID = models.ForeignKey(ToolCondition, on_delete=models.CASCADE, null=True, blank=True)
+    DateCreated = models.DateField(default = now, editable = False)
+    TimesRented = models.SmallIntegerField(default=0)
+    Decomissioned = models.CharField(max_length = 10, choices = YN, default = 'N', null=True, blank=True)
     DateDecomissioned = models.DateField(blank = True, null = True)
+    ModifiedDate = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.ToolID.ToolName + " (" + str(self.ToolID.ToolBrand) + ") #" + str(self.ToolNumber) 
+        return self.ToolID.ToolName + " #" + self.InventoryID
+    
 
-class InventoryForm(ModelForm):
-    class Meta:
-        model = Inventory
-        exclude = ['PictureURL']
-        labels = {
-            'StoreID' : 'Store Name',
-            'ToolName' : 'Tool Name',
-        }
+class ToolPrice(models.Model):
+    ToolID = models.ForeignKey(Tool, on_delete=models.CASCADE)
+    PriceRateID = models.ForeignKey(PriceRate, on_delete=models.CASCADE)
+    Price = models.DecimalField(max_digits=10, decimal_places=2)
+    StartDate = models.DateField(auto_now=True)
+    EndDate = models.DateField(blank = True, null = True)
+    ModifiedDate = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return "$" + str(self.Price) + " " + self.PriceRateID.PriceRate
+
 

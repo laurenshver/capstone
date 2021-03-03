@@ -1,8 +1,9 @@
 from django.db import models
 from datetime import timedelta, datetime
-from inventory.models import Inventory
-from customer.models import Customer, Address
+from inventory.models import Inventory, PriceRate
+from customer.models import Customer, Address, BusinessContact
 from retail.models import Store
+import order.models
 
 def two_business_days():
     '''sets the quote expiry date to be in the next 2 business days'''
@@ -19,36 +20,28 @@ yn = (
         ('N', 'NO'),
     )
 
-RENTAL_RATE = (
-    ('H', 'HOURLY'),
-    ('D', 'DAILY'),
-    ('W', 'WEEKLY'),
-    ('M', 'MONTHLY'),
-)
-
 # Create your models here.
+class QuoteStatus(models.Model):
+    QuoteStatus = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.QuoteStatus
+
 class Quote(models.Model):
     QuoteID = models.AutoField(primary_key = True)
     CustomerID = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True)
     StoreID = models.ForeignKey(Store, on_delete=models.CASCADE, blank=True)
     AddressID = models.ForeignKey(Address, on_delete=models.CASCADE, blank=True, null = True)
+    CostID = models.ForeignKey("order.Cost", on_delete=models.CASCADE, blank=True, null = True)
+    QuoteStatus = models.ForeignKey(QuoteStatus, on_delete=models.CASCADE, blank=True, null = True)
+    BusinessContactID = models.ForeignKey(BusinessContact, on_delete=models.CASCADE, blank=True, null = True)
     DateCreated = models.DateField(auto_now_add=True)
-    Expired = models.CharField(max_length = 10, choices = yn, default = 'N')
     ExpiryDate = models.DateField(default = two_business_days, editable = False)
-    CustomerFirstName = models.CharField(max_length = 100, blank = True)
-    CustomerLastName = models.CharField(max_length = 100, blank = True)
-    CustomerEmail = models.CharField(max_length = 100, blank = True)
-    CustomerPhoneNumber = models.CharField(max_length = 100, blank = True)
     ProjectType = models.CharField(max_length = 100, blank = True)
-    BusinessProjectManager = models.CharField(max_length = 100, blank = True)
-    BusinessProjectManagerContact = models.CharField(max_length = 100, blank = True)
     DesiredStartDate = models.DateField(auto_now=True)
     DesiredEndDate = models.DateField(auto_now=True)
-    EstTotalCost = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00)
-    EstSubtotal = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00)
-    EstDeposit = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00)
-    EstTaxes = models.DecimalField(max_digits=10, decimal_places=2, default = 0.00)
-    TandCAccepted = models.CharField(max_length = 10, choices = yn, default = 'N')
+    QuoteAccepted = models.CharField(max_length = 10, choices = yn, default = 'Y')
 
     def __str__(self):
         return self.CustomerFirstName + " " + self.CustomerLastName + " exp. " + str(self.ExpiryDate.strftime("%b %d %y"))
@@ -57,8 +50,8 @@ class Quote(models.Model):
 class QuoteTool(models.Model):
     QuoteID = models.ForeignKey(Quote, on_delete=models.CASCADE)
     ToolID = models.ForeignKey(Inventory, on_delete=models.CASCADE)
-    RateRequested = models.CharField(max_length = 2, choices = RENTAL_RATE, blank = True)
+    RateRequested = models.ForeignKey(PriceRate, on_delete=models.CASCADE)
     QuantityRequested = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return str(self.QuoteID.CustomerQuoteID) + " - " + str(self.ToolID)
+        return str(self.QuoteID) + " - " + str(self.ToolID)

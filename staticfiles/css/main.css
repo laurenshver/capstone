@@ -23,10 +23,11 @@
     width: 20%;
 }
 
-.column-sixty {
+.column-8 {
     float: left;
-    width: 60%;
+    width: 12.5%;
 }
+
   /* Clear floats after the columns */
 .row:after {
     content: "";

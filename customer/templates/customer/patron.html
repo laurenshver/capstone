@@ -1,0 +1,113 @@
+{% extends "customer/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load string_multiply%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patron Summary</title>
+    <link rel="stylesheet" type = "text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type = "text/css" href="{% static 'css/patron.css' %}">
+    <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script>
+        function myFunction() {
+            var input = document.getElementById("search");
+            var filter = input.value.toLowerCase();
+            var x = document.getElementsByClassName('target');
+            var nodes = document.getElementsByClassName('target');
+
+            for (i = 0; i < nodes.length; i++) {
+                if (nodes[i].innerText.toLowerCase().includes(filter)) {
+                    nodes[i].style.display = "block";
+                } else {
+                    nodes[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Patrons</h1>
+    <!-- search bar -->
+    <div class="row">
+        <div class="column-8" style="visibility: hidden;">hidden</div>
+        <div class="column-three-q">
+            <form action="#" class="searchform">
+                <input type="search" name="search" id="search" class="searchbox" onkeyup="myFunction()" placeholder="Search Patrons">
+                <button type="submit" class="searchbutton"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- patrons -->
+    <div class="row">
+        <div class="column-8" style="visibility: hidden;">hidden</div>
+        <div class="column-three-q">
+            <br>
+            <table style="width: 100%; text-align: center; table-layout: fixed;">
+                <tr>
+                <th>Patron</th>
+                <th>Postal Code</th>
+                <th>Phone Number</th>
+                <th>Rating</th>
+                <th style="visibility: collapse;">Hidden </th>
+                </tr>
+                
+            </table>
+
+            <!-- patron loop start -->
+            {% for patron in patrons %}
+            <div class="target">
+                <div class="details">
+                    <div class="row" style="text-align: center;">
+
+                        <div class="column-5">
+                            <p>{{patron.FirstName}} {{patron.LastName}}</p>
+                        </div>
+                        <div class="column-5">
+                            <p>{{patron.AddressID.PostalCode}}</p>
+                        </div>
+                        <div class="column-5">
+                            <p>{{patron.PhoneNumber}}</p>
+                        </div>
+                        <div class="column-5">
+                            <p>
+                            {% filter multiply:patron.CustomerID.CustomerRating %}
+                            <span class="fa fa-star checked"></span>
+                            {% endfilter %}
+                            {% filter unchecked:patron.CustomerID.CustomerRating %}
+                            <span class="fa fa-star unchecked"></span>
+                            {% endfilter %}
+                            </p>
+                        </div>
+                        <div class="column-5" style="text-align: right;">
+                            <br>
+                            <a href="customerdetails.html"><i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+            
+
+            {% endfor %}
+            </div>
+            <!-- patron loop end -->
+
+            
+
+        </div>
+
+    </div>
+    <br><br><br><br><br><br><br><br><br>
+{% endblock content %}
+</body>
+
+</html>

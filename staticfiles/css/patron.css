@@ -1,0 +1,94 @@
+h1{
+    color: #355070;
+    text-align: center;
+}
+
+.header{
+    text-align: center;
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    background-color: #f8f9fa;
+}
+.detail-header{
+    text-align: center;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    margin:2px;
+}
+
+.details{
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    background-color: #f8f9fa;
+}
+
+
+.searchform{
+    margin:5px;
+    position: relative;
+    display: flex;
+}
+
+.searchbox{
+width: 97%;
+  border: 1px solid #355070;
+  border-right: none;
+  padding: 5px;
+  height: 50px;
+  border-radius: 3px 0 0 3px;
+  outline: none;
+  color: #355070;
+  font-size: x-large;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.searchbutton{
+    width: 40px;
+  height: 50px;
+  border: 1px solid #355070;
+  background: #355070;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.row.title{
+    text-align: center;
+    padding: 15px;
+    margin: 5px;
+}
+
+.row.title div p{
+    height:0;
+    font-weight: bold;
+}
+
+a:link{
+    color: black;
+}
+
+a:visited i {
+    color: black;
+}
+
+a i:hover{
+    color: #b56576;
+}
+
+::placeholder{
+    color: #d0d2d4;
+}
+
+.checked {
+    color: #eaac8bff;
+}
