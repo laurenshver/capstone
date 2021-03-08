@@ -1,0 +1,241 @@
+
+h1{
+    color: #355070;
+    text-align: center;
+ }
+
+ th{
+     text-align: left;
+ }
+
+ .returnbutton {
+    font-weight: 700;
+    border: none;
+    background-color: #355070ff;
+    color: rgb(255, 255, 255);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; 
+    margin-left: 10px; 
+ }
+ html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    /* font-family: 'Roboto', sans-serif; */
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
+    display: flex;
+  }
+  
+  /* Columns */
+  .left-column {
+    width: 60%;
+    position: relative;
+    margin-top: 30px;
+    margin-right: 40px;
+    border: 2px solid rgb(155, 155, 155);
+    border-radius: 8px;
+    border-width: 0.5px;
+    padding: 20px;
+  }
+  
+  .right-column {
+    width: 40%;
+    margin-top: auto;
+    margin-bottom:auto;
+    border: 2px solid rgb(155, 155, 155);
+    border-radius: 8px;
+    border-width: 0.5px;
+    padding: 20px;
+  }
+
+  /* Product Description */
+.product-description {
+    border-bottom: 1px solid #E1E8EE;
+    margin-bottom: 20px;
+  }
+
+  .product-description pre {
+    white-space: pre-wrap;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 300;
+    color: #86939E;
+    line-height: 24px;
+  }
+
+  .cart-btn {
+    display: inline-block;
+    background-color: #355070ff;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 12px 30px;
+    transition: all .5s;
+    margin-top: 20px;
+  }
+
+  .cart-btn:hover {
+    background-color: #b56576ff;
+  }
+
+  .picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .tool-description {
+    text-align: center;
+    color: #86939E;
+  }
+
+  /* Tables */
+
+  h2 {
+    text-align: center;
+    color: #355070ff;
+  }
+
+  h3 {
+    text-align: center;
+    color: #355070ff;
+    border-bottom: 1px dotted gray;
+  }
+
+  .tool-information, th, td, .serials, .prices, .inventoryinfo, .serialsother {
+    border: 1px solid rgb(248, 248, 248);
+    border-collapse: collapse;
+  }
+
+  .serials, .serialsother {
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .serials th, .serialsother th {
+    text-align: center;
+  }
+
+  .tool-information {
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    display: inline-table;
+    width: 50%;
+    margin-left: 2%;
+  }
+
+  .inventoryinfo {
+    display: inline-table;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 40%;
+    margin-left: 5%;
+  }
+
+  .inventoryinfo td {
+    width: 45px;
+    text-align: center;
+  }
+
+  .inventoryinfo th, .tool-information th {
+    padding: 7px;
+  }
+
+  .prices {
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  th {
+    background-color: rgb(203, 210, 219);
+    padding: 10px;
+  }
+
+  td {
+    padding: 7px
+  }
+
+
+
+  #gfg, #gf {
+    padding: 4px;
+    margin-bottom: 10px;
+    width: 29%; 
+  }
+
+.option, #rate {
+  display: inline;
+}
+
+.option {
+  font-weight: 600;
+  font-size: 16px;
+  color:rgb(109, 109, 109);
+  padding-right: 6px;
+}
+
+#length {
+  width:10%;
+}
+
+.choose-rate input[type="radio"] {
+  opacity: 0;
+  width: 0;
+  text-align: center;
+}
+
+.choose-rate label {
+  display: inline-block;
+  background-color: rgb(203, 210, 219);
+  padding: 10px 10px;
+  font-size: 16px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  width: 40%;
+  text-align: center;
+}
+
+.choose-rate input[type="radio"]:checked + label {
+  background-color:#debac2;
+  border-color: #b56576;
+}
+
+input[type="datetime-local"]{
+  text-align: center;
+  margin-left: 25%;
+  height: 40px;
+}
+
+input[type="number"]{
+  text-align: center;
+  height: 40px;
+  font-size: large;
+  margin-left: 45%;
+}
+
+.date-estimate {
+  display: inline-block;
+  background-color: rgb(102, 106, 112);
+  border-radius: 6px;
+  font-size: 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 12px 30px;
+  transition: all .5s;
+  margin-top: 20px;
+}

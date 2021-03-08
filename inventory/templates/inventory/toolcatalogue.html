@@ -1,0 +1,90 @@
+{% extends "customer/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load filters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATSR Inventory</title>
+    <link rel="stylesheet" href="{% static 'css/toolcatalogue.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+</head>
+
+<body>
+    <h1>Tool Catalogue</h1>
+    <div class="sales-products-filter">
+  
+        <!-- CATEGORY FILTER -->
+        <select class="filter-brand">
+          <option value="0" selected>All Categories</option>
+          {% for category in categories%}
+          <option value="{{ category.ShortForm}}">{{ category.ToolCategory }}</option>
+          {% endfor %}
+        </select>
+        
+        <!-- SUBCATEGORY FILTER -->
+        <select class="filter-type">
+          <option value="0" selected>All Sub-Categories</option>
+          {% for category in subcategories%}
+          <option value="{{ category.ShortForm}}">{{ category.ToolSubCategory }}</option>
+          {% endfor %}
+        </select>
+        
+        <button class="filter-btn">Filter</button>
+        <button class="filter-btn" onclick='document.location=""'>Clear</button>
+          
+    </div>
+        
+    <div class="row">
+        <div class="column-5" style="visibility: hidden;">hidden</div>
+        <div class="column-sixty">
+        {% for tool in tool_list %}
+        <a href="tool/{{tool.ToolID}}">
+        <div id="column-3" class="filter {{ tool.ToolCategoryID.ShortForm }} {{ tool.ToolSubCategoryID.ShortForm }}">
+            <img src="{{tool.ToolPicture.url}}" alt="picture" height="150px" width = "150px">
+            <p><strong>{{ tool.ToolName|truncatechars:50 }}</strong></p>
+            <strong>{{ tool.ToolBrand|upper }}</strong><br><br>{{ tool.ToolPowerTypeID }}<br><br>
+            
+        </div>
+        </a>
+        {% endfor %}
+
+        </div>
+        <div class="column-5" style="visibility: hidden;">hidden</div>
+    </div>
+
+<script>
+$('select').change(function(){
+
+});
+
+$( ".filter-btn" ).click(function() {
+  var type = $( ".filter-type option:selected" ).val();
+  var brand = $( ".filter-brand option:selected" ).val();
+  $('.filter').hide(); 
+
+if ($('.filter').hasClass(brand) && $('.filter').hasClass(type)) { 
+  $('.' + brand + '' + '.' + type).show();
+} else if 
+  ($('.filter').hasClass(brand)&& $('.filter').val(0)) {
+  $('.' + brand).show();
+} else if 
+($('.filter').val(0)&& $('.filter').hasClass(type)) {
+  $('.' + type).show();
+} else if 
+($('.filter-brand').val(0)&& $('.filter-type').val(0)) {
+  $('.filter').show();
+} else {
+  $('.' + brand + '' + '.' + type).hide();
+}
+
+
+});
+</script>
+{% endblock content %}
+</body>
+</html>

@@ -1,0 +1,407 @@
+{% extends "customer/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load string_multiply%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ business.BusinessName }}'s Details</title>
+    <link rel="stylesheet" href="{% static 'css/patrondetails.css' %}">
+</head>
+
+
+
+<body>
+  <h1 class="headline">Business Details</h1>
+
+  <button class="backBtn" onclick = "document.location='../../business.html'">Back to Businesses</button>
+  <button class="addbtn">Add to Order</button><br>
+  <h4>Last Edited By:</h4> <span id="author">Lauren Shver</span> <h4>on</h4> <span id="author">02-12-2021</span>
+  
+  <div class="grid-container">
+
+    <div id="wrapper">
+
+        <section>
+          <button id="editBtn" type="button">Edit Business Details</button><br>
+          <div id="editDocument">
+            <h1 id="title">Basic Information</h1>
+            <table class="contact-information">
+            <tr>
+            <th>Customer ID:</th>
+            <td>{{ business.CustomerID.CustomerID }}<td>
+            </tr>
+            <tr>
+            <th>Business Name:</th>
+            <td>{{ business.BusinessName}}<td>
+            </tr>
+            <tr>
+            <th>Business Area:</th>
+            <td>{{ business.BusinessArea }}<td>
+            </tr>
+            <tr>
+            <th>Business Email:</th>
+            <td>{{ business.BusinessEmail }}<td>
+            </tr>
+            <tr>
+            <th>Customer Rating:</th>
+            <td>{% filter multiply:business.CustomerID.CustomerRating %}
+                <i class="fa fa-star checked"></i>
+                {% endfilter %}
+                {% filter unchecked:business.CustomerID.CustomerRating %}
+                <i class="fa fa-star unchecked"></i>
+                {% endfilter %}<td>
+            </tr>
+            <tr>
+            <th>Notes:</th>
+            <td>{% if business.CustomerID.CustomerNotes %}
+              {{ business.CustomerID.CustomerNotes }}
+              {% else %}
+              No Notes
+              {% endif %}<td>
+            </tr>
+            </table>
+          </div>
+        </section>
+    
+
+      <script>
+        var editBtn = document.getElementById('editBtn');
+        var editables = document.querySelectorAll('#title, #author, #content')
+        
+        editBtn.addEventListener('click', function(e) {
+            if (!editables[0].isContentEditable) {
+                editables[0].contentEditable = 'true';
+                editables[1].contentEditable = 'true';
+                editables[2].contentEditable = 'true';
+                editables[3].contentEditable = 'true';
+                editables[4].contentEditable = 'true';
+                editables[5].contentEditable = 'true';
+                editables[6].contentEditable = 'true';
+                editables[7].contentEditable = 'true';
+                editBtn.innerHTML = 'Save Changes';
+                editBtn.style.backgroundColor = '#b56576ff';
+             } else {
+            // Disable Editing
+            editables[0].contentEditable = 'false';
+            editables[1].contentEditable = 'false';
+            editables[2].contentEditable = 'false';
+            editables[3].contentEditable = 'false';
+            editables[4].contentEditable = 'false';
+            editables[5].contentEditable = 'false';
+            editables[6].contentEditable = 'false';
+            editables[7].contentEditable = 'false';
+            // Change Button Text and Color
+            editBtn.innerHTML = 'Edit Business Details';
+            editBtn.style.backgroundColor = '#355070ff';
+            // Save the data in localStorage 
+            for (var i = 0; i < editables.length; i++) {
+              localStorage.setItem(editables[i].getAttribute('id'), editables[i].innerHTML);
+            }
+          }
+        });      
+      </script>
+    </div>
+
+    <div id="wrapper1">
+      <button id="editBtn1" type="button" hidden>Edit Business Details</button>
+      <section>
+        <div id="editDocument1">
+          <h1 id="title">Address</h1>
+          <table class="contact-information">
+          <tr>
+          <th>Address:</th>
+          {% if business.AddressID.AptSuite %}
+                  <td>{{business.AddressID.Address}}, {{business.AddressID.AptSuite}}</td>
+              {% else %}
+                  <td>{{business.AddressID.Address}}</td>
+              {% endif %}
+          </tr>
+          <tr>
+          <th>City:</th>
+          <td>{{ business.AddressID.City }}<td>
+          </tr>
+          <tr>
+          <th>Province:</th>
+          <td>{{ business.AddressID.ProvinceID.ProvinceLongName }}<td>
+          </tr>
+          <tr>
+          <th>Postal Code:</th>
+          <td>{{ business.AddressID.PostalCode }}<td>
+          </tr>
+          </table>
+          <h1 id="title">Business Discounts</h1>
+          <table class = "contact-information">
+          <tr>
+          <th>Discount Tier: </th>
+          <td>{{ business.BusinessDiscountID.BusinessTier }}<td>
+          </tr>
+          <tr>
+          <th>Discount Percentage: </th>
+          <td>{{ business.BusinessDiscountID.BusinessDiscountPercentage }}%<td>
+          </tr>
+          </table>
+        </div>
+      </section>
+
+      <script>
+        var editBtn1 = document.getElementById('editBtn1');
+        var editables1 = document.querySelectorAll('#thing')
+        
+        editBtn.addEventListener('click', function(e) {
+            if (!editables1[0].isContentEditable) {
+                editables1[0].contentEditable = 'true';
+                editables1[1].contentEditable = 'true';
+                editables1[2].contentEditable = 'true';
+                editables1[3].contentEditable = 'true';
+                editables1[4].contentEditable = 'true';
+                editables1[5].contentEditable = 'true';
+                editables1[6].contentEditable = 'true';
+                editables1[7].contentEditable = 'true';
+                editables1[8].contentEditable = 'true';
+                editables1[9].contentEditable = 'true';
+                editables1[10].contentEditable = 'true';
+                editBtn1.innerHTML = 'Save Changes';
+                editBtn1.style.backgroundColor = '#b56576ff';
+             } else {
+            // Disable Editing
+            editables1[0].contentEditable = 'false';
+            editables1[1].contentEditable = 'false';
+            editables1[2].contentEditable = 'false';
+            editables1[3].contentEditable = 'false';
+            editables1[4].contentEditable = 'false';
+            editables1[5].contentEditable = 'false';
+            editables1[6].contentEditable = 'false';
+            editables1[7].contentEditable = 'false';
+            editables1[8].contentEditable = 'false';
+            editables1[9].contentEditable = 'false';
+            editables1[10].contentEditable = 'false';
+            // Change Button Text and Color
+            editBtn1.innerHTML = 'Edit Business Details';
+            editBtn1.style.backgroundColor = '#355070ff';
+            // Save the data in localStorage 
+            for (var i = 0; i < editables.length; i++) {
+              localStorage.setItem(editables1[i].getAttribute('id'), editables1[i].innerHTML);
+            }
+          }
+        });      
+      </script>
+
+    </div>
+
+    <div class = "contacts">
+
+      <button id="editBtn1" type="button" hidden>Edit Business Details</button>
+
+      <h1 id="title">Primary Contact Information</h1>
+      {% for contact in contacts %}
+      {% if contact.PrimaryContact == 'Y' %}
+          <table class="contact-information">
+            <tr>
+            <th>Name:</th>
+            <td>{{ contact.FirstName }} {{ contact.LastName }}<td>
+            </tr>
+            <tr>
+            <th>Contact Role:</th>
+            <td>{{ contact.BusinessContactRoleID}}<td>
+            </tr>
+            <tr>
+            <th>Email:</th>
+            <td>{{ contact.Email }}<td>
+            </tr>
+            <tr>
+            <th>Phone Number:</th>
+            <td>{{ contact.PhoneNumberID.PhoneNumber }}<td>
+            </tr>
+            <tr>
+          </table>
+      {% endif %}
+      {% endfor %}
+      
+      <script>
+        var editBtn3 = document.getElementById('editBtn');
+        var editables3 = document.querySelectorAll('#primary')
+        
+        editBtn3.addEventListener('click', function(e) {
+            if (!editables3[0].isContentEditable) {
+                editables3[0].contentEditable = 'true';
+                editables3[1].contentEditable = 'true';
+                editables3[2].contentEditable = 'true';
+                editables3[3].contentEditable = 'true';
+                editables3[4].contentEditable = 'true';
+                editables3[5].contentEditable = 'true';
+                editables3[6].contentEditable = 'true';
+                editables3[7].contentEditable = 'true';
+                editBtn3.innerHTML = 'Save Changes';
+                editBtn3.style.backgroundColor = '#b56576ff';
+             } else {
+            // Disable Editing
+            editables3[0].contentEditable = 'false';
+            editables3[1].contentEditable = 'false';
+            editables3[2].contentEditable = 'false';
+            editables3[3].contentEditable = 'false';
+            editables3[4].contentEditable = 'false';
+            editables3[5].contentEditable = 'false';
+            editables3[6].contentEditable = 'false';
+            editables3[7].contentEditable = 'false';
+            // Change Button Text and Color
+            editBtn3.innerHTML = 'Edit Business Details';
+            editBtn3.style.backgroundColor = '#355070ff';
+            // Save the data in localStorage 
+            for (var i = 0; i < editables3.length; i++) {
+              localStorage.setItem(editables3[i].getAttribute('id'), editables3[i].innerHTML);
+            }
+          }
+        });      
+      </script>
+    
+    </div>
+
+    <div class = "contacts">
+
+        <button id="editBtn2" type="button" hidden>Edit Business Details</button>
+        <section>
+          <div id="editDocument2">
+
+            
+            <h1 id="title">Other Contact Information</h1>
+            {% for contact in contacts %}
+            {% if contact.PrimaryContact == 'N' %}
+          <table class="contact-information">
+            <tr>
+            <th>Name:</th>
+            <td>{{ contact.FirstName }} {{ contact.LastName }}<td>
+            </tr>
+            <tr>
+            <th>Contact Role:</th>
+            <td>{{ contact.BusinessContactRoleID}}<td>
+            </tr>
+            <tr>
+            <th>Email:</th>
+            <td>{{ contact.Email }}<td>
+            </tr>
+            <tr>
+            <th>Phone Number:</th>
+            <td>{{ contact.PhoneNumberID.PhoneNumber }}<td>
+            </tr>
+            <tr>
+          </table>
+          <hr>
+      {% endif %}
+      {% endfor %}
+    
+          </div>
+        </section>
+
+        <script>
+            var editBtn2 = document.getElementById('editBtn2');
+            var editables2 = document.querySelectorAll('#thing1')
+            
+            editBtn.addEventListener('click', function(e) {
+                if (!editables2[0].isContentEditable) {
+                    editables2[0].contentEditable = 'true';
+                    editables2[1].contentEditable = 'true';
+                    editables2[2].contentEditable = 'true';
+                    editables2[3].contentEditable = 'true';
+                    editables2[4].contentEditable = 'true';
+                    editables2[5].contentEditable = 'true';
+                    editables2[6].contentEditable = 'true';
+                    editables2[7].contentEditable = 'true';
+                    editables2[8].contentEditable = 'true';
+                    editables2[9].contentEditable = 'true';
+                    editables2[10].contentEditable = 'true';
+                    editables2[11].contentEditable = 'true';
+                    editBtn2.innerHTML = 'Save Changes';
+                    editBtn2.style.backgroundColor = '#b56576ff';
+                 } else {
+                // Disable Editing
+                editables2[0].contentEditable = 'false';
+                editables2[1].contentEditable = 'false';
+                editables2[2].contentEditable = 'false';
+                editables2[3].contentEditable = 'false';
+                editables2[4].contentEditable = 'false';
+                editables2[5].contentEditable = 'false';
+                editables2[6].contentEditable = 'false';
+                editables2[7].contentEditable = 'false';
+                editables2[8].contentEditable = 'false';
+                editables2[9].contentEditable = 'false';
+                editables2[10].contentEditable = 'false';
+                editables2[11].contentEditable = 'false';
+                // Change Button Text and Color
+                editBtn2.innerHTML = 'Edit Business Details';
+                editBtn2.style.backgroundColor = '#355070ff';
+                // Save the data in localStorage 
+                for (var i = 0; i < editables.length; i++) {
+                  localStorage.setItem(editables2[i].getAttribute('id'), editables2[i].innerHTML);
+                }
+              }
+            });      
+          </script>
+    
+
+    </div>
+
+
+
+    <div class="item3">
+        <h3>Quotes</h3>
+        <table class="quotes">
+            <tr>
+              <th>Quote ID</th>
+              <th>Start Date/Time</th>
+              <th>Estimated End Date/Time</th>
+            </tr>
+            <tr>
+              <td><a href="#">1234567</a></td>
+              <td>February 15, 2021 10:00 AM</td>
+              <td>February 20, 2021, 10:00 AM</td>
+            </tr>
+            <tr>
+              <td><a href="#">8745698</a></td>
+              <td>March 01, 2021 11:00 AM</td>
+              <td>March 05, 2021, 11:00 AM</td>
+            </tr>
+          </table>
+    </div>
+
+      <div class="item3">
+      <h3>Outstanding Orders</h3>
+      <table class="outstanding">
+        <tr>
+          <th>Order ID</th>
+          <th>Start Date/Time</th>
+          <th>Estimated End Date/Time</th>
+        </tr>
+        <tr>
+          <td><a href="#">1234567</a></td>
+          <td>February 15, 2021 10:00 AM</td>
+          <td>February 20, 2021, 10:00 AM</td>
+        </tr>
+        <tr>
+          <td><a href="#">8745698</a></td>
+          <td>March 01, 2021 11:00 AM</td>
+          <td>March 05, 2021, 11:00 AM</td>
+        </tr>
+      </table>
+
+      <h3>Past Orders</h3>
+      <table class="past">
+        <tr>
+          <th>Order ID</th>
+          <th>Start Date/Time</th>
+          <th>End Date/Time</th>
+        </tr>
+        <tr>
+          <td><a href="#">2468102</a></td>
+          <td>January 10, 2020 10:00 AM</td>
+          <td>January 20, 2020, 10:00 AM</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+{% endblock content %}
+</body> 
+</html>

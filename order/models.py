@@ -10,22 +10,16 @@ YN = (
     ('N', 'NO'),
 )
 
-STATUS = (
-    ('O', 'OPEN'),
-    ('C', 'CLOSED'),
-)
+class OrderStatus(models.Model):
+    OrderStatus = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)
 
-TOOL_RETREIVAL = (
-    ('D', 'Delivery'),
-    ('P', 'Patron Pickup'),
-)
+    def __str__(self):
+        return self.OrderStatus
 
-REFUND_STATUS = (
-    ('G', 'GOOD'),
-    ('O', 'OK'),
-    ('P', 'POOR'),
-)
-
+class ToolRetreival(models.Model):
+    ToolRetreival = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)
 
 class ExtraFeeSchedule(models.Model):
     ExtraFeeID = models.AutoField(primary_key = True)
@@ -74,18 +68,17 @@ class Order(models.Model):
     # fk from address
     AddressID = models.ForeignKey(Address, on_delete=models.CASCADE, blank = True, null = True)
     CostID = models.ForeignKey(Cost, on_delete=models.CASCADE, blank = True, null = True)
-    OrderStatus = models.CharField(max_length=100, choices=STATUS, default='O')
-    ToolRetreival = models.CharField(max_length = 10, choices = TOOL_RETREIVAL, blank = True, null = True)
+    OrderStatusID = models.ForeignKey(OrderStatus, on_delete=models.CASCADE, blank = True, null = True)
+    ToolRetreival = models.ForeignKey(ToolRetreival, on_delete=models.CASCADE, blank = True, null = True)
     StartDate = models.DateTimeField(auto_now_add=True)
     EstimatedEndDate = models.DateTimeField()
     EndDate = models.DateTimeField()
     TandCAccepted = models.CharField(max_length = 10, choices = YN, default = 'N')
-    OrderStatusAfterRefund = models.CharField(max_length = 20, choices = REFUND_STATUS, default = 'G')
     OrderNotes = models.TextField(blank=True)
     ModifiedDate = models.DateField(auto_now=True)
 
     def __str__(self):
-        return str(self.CustomerID) + " " + str(self.OrderStatus)
+        return str(self.CustomerID) + " " + str(self.OrderStatus.OrderStatus)
 
 
 class OrderTool(models.Model):

@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from retail import views
 
 
 urlpatterns = [
+    path('', views.index), #homepage is in retail views
     path('admin/', admin.site.urls),
     path('customer/', include('customer.urls')),
     path('retail/', include('retail.urls')),

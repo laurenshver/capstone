@@ -3,11 +3,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
-PHONE_NUMBER_TYPE = (
-        ('C', 'Cell'),
-        ('H', 'Home'),
-        ('B', 'Business'),
-    )
 YN = (
     ('Y', 'YES'),
     ('N', 'NO'),
@@ -30,20 +25,27 @@ class Province(models.Model):
     def __str__(self):
         return self.ProvinceLongName + "(" + self.ProvinceShortName + ")"
 
+class PhoneNumberType(models.Model):
+    PhoneNumberType = models.CharField(max_length = 20)
+    ModifiedDate = models.DateField(auto_now=True)
+    
+    def __str__(self):
+        return self.PhoneNumberType
+
 class PhoneNumber(models.Model):
     
     PhoneNumberID = models.AutoField(primary_key = True)
     IdentifierType = models.ForeignKey(IdentifierType, on_delete=models.CASCADE, blank = True, null = True)
-    PhoneNumbreType = models.CharField(max_length = 4, choices = PHONE_NUMBER_TYPE)
+    PhoneNumberType = models.ForeignKey(PhoneNumberType, on_delete=models.CASCADE, blank = True, null = True)
     PhoneNumber = models.CharField(max_length = 30)
     Extension = models.CharField(max_length = 10, blank = True, null = True)
     ModifiedDate = models.DateField(auto_now=True)
 
     def __str__(self):
         if self.Extension:
-            return str(self.IdentifierType.IdentifierType) + " " + self.PhoneNumber + " ext. " + self.Extension
+            return str(self.IdentifierType.IdentifierType) + " " + str(self.PhoneNumberType.PhoneNumberType) + " " + self.PhoneNumber + " ext. " + self.Extension
         else:
-            return str(self.IdentifierType.IdentifierType) + " " + self.PhoneNumber
+            return str(self.IdentifierType.IdentifierType) + " " + str(self.PhoneNumberType.PhoneNumberType) + " " + self.PhoneNumber
 
 class Address(models.Model):
     
@@ -58,7 +60,10 @@ class Address(models.Model):
     PhoneNumberID = models.ForeignKey(PhoneNumber, on_delete=models.CASCADE, blank = True, null = True)
 
     def __str__(self):
-        return self.Address + "(" + self.IdentifierTypeID.IdentifierType + ")"
+        if self.AptSuite:
+            return self.AptSuite + " " + self.Address + "(" + self.IdentifierTypeID.IdentifierType + ")"
+        else:
+            return self.Address + "(" + self.IdentifierTypeID.IdentifierType + ")"
 
 class BusinessDiscountSchedule(models.Model):
     BusinessDiscountID = models.AutoField(primary_key = True)
@@ -69,22 +74,24 @@ class BusinessDiscountSchedule(models.Model):
     def __str__(self):
         return self.BusinessTier + "  (" + str(self.BusinessDiscountPercentage) + "%)"
 
+class CustomerType(models.Model):
+    CustomerType = models.CharField(max_length = 40)
+    ModifiedDate = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.CustomerType
 
 class Customer(models.Model):
-    CUSTOMER_TYPE = (
-        ('P', 'Patron'),
-        ('B', 'Business'),
-    )
     CustomerID = models.AutoField(primary_key=True)
     DateCreated = models.DateField(auto_now_add=True)
     ModifedDate = models.DateField(auto_now=True)
-    CustomerType = models.CharField(max_length = 3, choices = CUSTOMER_TYPE, default = 'P')
+    CustomerType = models.ForeignKey(CustomerType, on_delete=models.CASCADE, blank = True, null = True)
     CustomerRating = models.SmallIntegerField(blank=True, default = 3, validators=[MaxValueValidator(5), MinValueValidator(1)])
     CustomerNotes = models.TextField(default=None,blank=True)
 
 
     def __str__(self):
-        return self.CustomerType + " Rating: " + str(self.CustomerRating)
+        return str(self.CustomerType) + " Rating: " + str(self.CustomerRating)
 
 
 class Patron(models.Model):
@@ -104,7 +111,7 @@ class PatronPhoneNumbers(models.Model):
     ModifedDate = models.DateField(auto_now=True)
 
     def __str__(self):
-        return str(self.PatronID) + " " + self.PhoneNumberID.PhoneNumbreType
+        return str(self.PatronID) + " " + str(self.PhoneNumberID.PhoneNumberType)
 
 class Business(models.Model):
     BusinessID = models.AutoField(primary_key = True)

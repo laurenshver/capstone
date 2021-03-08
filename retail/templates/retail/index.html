@@ -7,17 +7,8 @@
     {% extends "retail/app_base.html" %}
     
     {% block content %}
-    
-        <p>Employees</p>
-        <p>testing adding to this line</p>
-        <p>adding another line just to see</p>
-        <ul>
-        {% for employee in employee_list%}
-        <li>{{employee.EmployeeID}}</li>
-        <li>{{employee.FirstName}}</li>
-        <li>{{employee.LastName}}</li>
-        {% endfor %}
-        </ul>
+        <h1 style="text-align:center;">Homepage</h1>
+
         {% endblock content %}
     </body>
 </html>

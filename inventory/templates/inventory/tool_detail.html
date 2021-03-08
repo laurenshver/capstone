@@ -1,0 +1,254 @@
+{% extends "customer/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load filters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Details</title>
+    <link rel="stylesheet" href="{% static 'css/tooldetails.css' %}">
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{% static 'js/tool_detail.js' %}"></script>
+</head>
+ 
+<body> 
+    <h1>Tool Details</h1>
+
+    <button class="returnbutton" onclick ="document.location='../../'">Back to Tool Catalogue</button>
+
+   <main class="container">
+           <!-- Left Column -->
+        <div class="left-column">
+
+            <h3>Basic Information:</h3>
+            <div class="tables2">
+            <table class="tool-information">
+              <tr>
+                <th>Tool ID:</th>
+                <td>{{tool.ToolID}}</td>
+              </tr>
+              <tr>
+                <th>Brand:</th>
+                <td>{{ tool.ToolBrand|upper }}</td>
+              </tr>
+              <tr>
+                <th>Category:</th>
+                <td>{{ tool.ToolCategoryID }}</td>
+              </tr>
+              <tr>
+                <th>Sub-category:</th>
+                <td>{{ tool.ToolSubCategoryID.ToolSubCategory }}</td>
+              </tr>
+              <tr>
+                <th>Power Type:</th>
+                <td>{{ tool.ToolPowerTypeID }}</td>
+              </tr>
+            </table>
+
+            <table class="inventoryinfo">
+              <tr>
+                <th>Number in Inventory:</th>
+                <td>{{ inventory|store_filter_count }}</td>
+              </tr>
+              <tr>
+                <th>Number Available:</th>
+                <td>{{ inventory|status_filter:"Available" }}</td>
+              </tr>
+              <tr>
+                <th>Number Rented:</th>
+                <td>{{ inventory|status_filter:"Rented" }}</td>
+              </tr>
+              <tr>
+                <th>Number Service:</th>
+                <td>{{ inventory|status_filter:"Service" }}</td>
+              </tr>
+              <tr>
+                <th>Number Obsolete:</th>
+                <td>{{ inventory|status_filter:"Obsolete" }}</td>
+              </tr>
+            </table>
+
+          </div>
+
+          <h3>Pricing:</h3>
+          <div>
+            <table class="prices">  
+              <tr>
+                <th>Hourly Price</th>
+                <th>Daily Price</th>
+                <th>Weekly Price</th>
+                <th>Monthly Price</th>
+              </tr>
+              <tr>
+              {% for price in prices|get_price:"Hourly" %}
+              <td>$ {{ price.Price }}</td>
+              {% endfor %}
+                {% for price in prices|get_price:"Daily" %}
+              <td>$ {{ price.Price }}</td>
+              {% endfor %}
+              {% for price in prices|get_price:"Weekly" %}
+              <td>$ {{ price.Price }}</td>
+              {% endfor %}
+              {% for price in prices|get_price:"Monthly" %}
+              <td>$ {{ price.Price }}</td>
+              {% endfor %}
+              </tr>
+            </table>
+            </div>
+          
+            <h3>Extra Charges:</h3>
+            <table class="prices">
+              <tr>
+                <th>Hourly Charge</th>
+                <th>Daily Charge</th>
+                <th>Weekly Charge</th>
+                <th>Monthly Charge</th>
+              </tr>
+              <tr>
+                <td>$35.00</td>
+                <td>$200.00</td>
+                <td>$580.00</td>
+                <td>$1,400.00</td>
+              </tr>
+            </table>
+
+            <h3>Tools in Store:</h3>
+            <div class="all-tools">Search for Inventory ID, Condition, Status or Store:
+              <input id="gfg" type="text" 
+                   placeholder="Search here"> 
+              
+              <form>
+              <table class="serials">
+                <tr>
+                  <th>Inventory ID</th>
+                  <th>Condition</th>
+                  <th>Store</th>
+                  <th>Status</th>
+                  <th>Add to Cart</th>
+                </tr>
+                <tbody id="items">
+                {% for i in inventory|store_filter:"Y" %}
+                <tr>
+                  <td>{{ i.InventoryID }}</td>
+                  <td>{{ i.ToolConditionID }}</td>
+                  <td>{{ i.StoreID }}</td>
+                  <td>{{ i.ToolStatusID }}</td>
+                  {% if i.ToolStatusID.ToolStatus == 'Available' %}
+                      <td><input type="checkbox" id="cart" name="cart" value="{{i.InventoryID}}"></td>
+                      {% else %}
+                      <td></td>
+                      {% endif %}
+                </tr>
+                {% endfor %}
+                
+              </tbody>
+              </table>
+            </form>
+          </div>
+
+              <h3>Tools in Other Stores:</h3>
+              <div class="all-tools">Search for Inventory ID, Condition, Status or Store:
+                <input id="gf" type="text" 
+                     placeholder="Search here"> 
+                
+                <form>
+                <table class="serialsother">
+                  <tr>
+                    <th>Inventory ID</th>
+                    <th>Condition</th>
+                    <th>Store</th>
+                    <th>Status</th>
+                    <th>Add to Cart</th>
+                  </tr>
+                  <tbody id="item">
+                  {% for i in inventory|store_filter:"N" %}
+                  <tr>
+                      <td>{{ i.InventoryID }}</td>
+                      <td>{{ i.ToolConditionID }}</td>
+                      <td>{{ i.StoreID }}</td>
+                      <td>{{ i.ToolStatusID }}</td>
+                      {% if i.ToolStatusID.ToolStatus == 'Available' %}
+                      <td><input type="checkbox" id="cart" name="cart" value="{{ i.InventoryID }}"></td>
+                      {% else %}
+                      <td></td>
+                      {% endif %}
+                      
+                    </tr>
+                  {% endfor %}
+                    
+                </tbody>
+                </table>
+              </form>
+              </div>
+          
+              <script> 
+                $(document).ready(function() { 
+                    $("#gfg").on("keyup", function() { 
+                        var value = $(this).val().toLowerCase(); 
+                        $("#items tr").filter(function() { 
+                            $(this).toggle($(this).text() 
+                            .toLowerCase().indexOf(value) > -1) 
+                        }); 
+                    }); 
+                }); 
+            </script>
+            
+            <script> 
+              $(document).ready(function() { 
+                  $("#gf").on("keyup", function() { 
+                      var value = $(this).val().toLowerCase(); 
+                      $("#item tr").filter(function() { 
+                          $(this).toggle($(this).text() 
+                          .toLowerCase().indexOf(value) > -1) 
+                      }); 
+                  }); 
+              }); 
+          </script>
+            
+        </div>
+
+    
+    
+          <!-- Right Column -->
+<div class="right-column">
+      
+  <div class="product-description">
+    <h2>{{ tool.ToolName }}</h2>
+    <img class="toolpicture" src="{{tool.ToolPicture.url}}" alt="picture" height="250px" class="picture">
+    <pre class="tool-description">{{ tool.ItemDescription }}</pre>
+
+  </div>
+
+      <div class="choose-rate">
+        <h3>Rate</h3>
+      <form id="rental-length" action="">
+          <input type="radio" id="hourly" name="rate" value="hourly" required>
+          <label for="hourly">Hourly</label>
+          <input type="radio" id="daily" name="rate" value="daily">
+          <label for="daily">Daily</label><br><br>
+          <input type="radio" id="weekly" name="rate" value="weekly">
+          <label for="weekly">Weekly</label>
+          <input type="radio" id="monthly" name="rate" value="monthly">
+          <label for="monthly">Monthly</label><br>
+      </div><br>
+      <h3>Start Date & Time</h3>
+        <input type="datetime-local" id="start" name="start" required>
+      <br>
+      <h3>Rental Length</h3>
+      <p class="tool-description">Hourly minimum is 4 hours</p>
+      <input type="number" id="length" max="10" min="1" name = "rlength" value="1"><br>
+      <input class="cart-btn" type="submit" id="submit" name="Add to cart" value="Add to cart">
+    </form>
+    <button onclick="document.getElementById('output').innerHTML = estimate_end_date()" class="date-estimate">Estimate End Date</button>
+    <p id="output"></p>
+    <br>
+
+</div>
+  </main>
+{% endblock content %}
+</body>
+</html>

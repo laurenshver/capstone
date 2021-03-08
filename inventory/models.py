@@ -10,6 +10,7 @@ YN = (
 
 class ToolCategory(models.Model):
     ToolCategory = models.CharField(max_length = 100)
+    ShortForm = models.CharField(max_length = 10, blank = True, null = True)
     ModifiedDate = models.DateField(auto_now=True)
 
     def __str__(self):
@@ -18,10 +19,11 @@ class ToolCategory(models.Model):
 class ToolSubCategory(models.Model):
     ToolCategoryID = models.ForeignKey(ToolCategory, on_delete=models.CASCADE)
     ToolSubCategory = models.CharField(max_length = 100)
+    ShortForm = models.CharField(max_length = 10, blank = True, null = True)
     ModifiedDate = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.ToolSubCategory
+        return self.ToolSubCategory + " (" + self.ToolCategoryID.ToolCategory + ")"
 
 class ToolStatus(models.Model):
     ToolStatus = models.CharField(max_length = 100)
@@ -45,10 +47,18 @@ class PriceRate(models.Model):
     def __str__(self):
         return self.PriceRate
 
+class ToolPowerType(models.Model):
+    ToolPowerType = models.CharField(max_length = 100)
+    ModifiedDate = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.ToolPowerType
+
 class Tool(models.Model):
     ToolID = models.AutoField(primary_key=True)
     ToolCategoryID = models.ForeignKey(ToolCategory, on_delete=models.CASCADE)
     ToolSubCategoryID = models.ForeignKey(ToolSubCategory, on_delete=models.CASCADE)
+    ToolPowerTypeID = models.ForeignKey(ToolPowerType, on_delete=models.CASCADE, blank = True, null = True)
     DateCreated = models.DateField(auto_now_add=True)
     ToolName = models.CharField(max_length = 100)
     ToolBrand = models.CharField(max_length = 100)
@@ -73,7 +83,7 @@ class Inventory(models.Model):
     ModifiedDate = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.ToolID.ToolName + " #" + self.InventoryID
+        return self.ToolID.ToolName + " #" + str(self.InventoryID)
     
 
 class ToolPrice(models.Model):
