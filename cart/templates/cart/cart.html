@@ -1,0 +1,104 @@
+{% extends "cart/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load cartfilters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+    <title>Order</title>
+</head>
+
+<body>
+<br>
+    <a href="../inventory" class="back-button"><i class="fas fa-chevron-left"></i> Return to Tool Catalogue</a>
+    <h1>New Order</h1>
+    <div class="row">
+        <div class="column-three-q">
+            <p class="header">Tools</p>
+        </div>
+        <div class="column-4">
+            <p class="header">Summary</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column-three-q">
+        {% if request.session.cart %}
+            {% for key, value in request.session.cart.items %}
+            {% for i in inventory|tool_filter:key %}
+                <div class="details">
+                    <div class="row">
+                        <div class="column-5">
+                            <img src="{{i.ToolID.ToolPicture.url}}" alt="tool"><br><br>
+                            <button class="remove-button">Remove</button>
+                        </div>
+                        <div class="column-5">
+                            <p><strong>{{ i.ToolID.ToolName }}</strong></p>
+                            <p><strong>{{ i.ToolID.ToolBrand|upper }}</strong></p>
+                            <p><strong>Inventory ID</strong><br>{{ key }}</p>
+                            <p><strong>Store</strong><br>{{ value.store }}</p>
+                            <p><strong>Tool Condition</strong><br>{{ i.ToolConditionID }}</p>
+                        </div>
+                        <div class="column-5">
+                            <p><strong>Start Date</strong><br>{{ value.startdate }}</p>
+                            <p><strong>Start Time</strong><br>{{ value.starttime }}</p>
+                            <p><strong>End Date</strong><br>{{ value.enddate }}</p>
+                            <p><strong>End Time</strong><br>{{ value.endtime }}</p>
+                        </div>
+                        <div class="column-5">
+                            <p><strong>Rental Length</strong><br>{{ value.rentallength }}</p>
+                            <p><strong>Rental Rate</strong><br>{{ value.rate|title }}</p>
+                            {% for price in prices|price_filter:i.ToolID|get_price:value.rate %}
+                            <p><strong>Price</strong><br>{{ price }}</p>
+                            
+                            
+                        </div>
+                        <div class="column-5">
+                            <p class="price">{{price|calc_total:value.rentallength}}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+        {% else %}
+        <div style="text-align:center;">
+        <p>Start an Order by Visiting the Tool Catalogue</p>
+        </div>
+        {% endif %}
+        
+        </div>
+        <div class="column-4">
+            <div class="details">
+                <div class="row">
+                    <div class="column-2" style="text-align: left; font-weight: bold;">
+                        <p>Subtotal</p>
+                        <p>Taxes</p>
+                        <p>Procurement</p>
+                        <p>Deposit (10%)</p>
+                        <p>Business Discount</p>
+                        <hr>
+                        <p>Total</p>
+                    </div>
+                    <div class="column-2" style="text-align: right;">
+                        <p>$41.00</p>
+                        <p>TBD</p>
+                        <p>TBD</p>
+                        <p>$4.10</p>
+                        <p style="color: red;">$3.50</p>
+                        <hr>
+                        <p><strong>$50.43</strong></p>
+                    </div>
+                </div>
+                <button class = "next-page-button"style="width: 100%;" onclick="location.href='select_customer.html'" type="button">Assign Customer</button>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock content %}
+</html>

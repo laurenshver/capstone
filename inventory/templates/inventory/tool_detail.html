@@ -1,7 +1,7 @@
 {% extends "customer/app_base.html" %}
 {% load static %}
 {% block content %}
-{% load filters %}
+{% load inventoryfilters %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -121,7 +121,8 @@
               <input id="gfg" type="text" 
                    placeholder="Search here"> 
               
-              <form>
+              <form method = "post" action = "{% url "cart" %}" name = "rental-length">
+               {% csrf_token %}
               <table class="serials">
                 <tr>
                   <th>Inventory ID</th>
@@ -138,7 +139,8 @@
                   <td>{{ i.StoreID }}</td>
                   <td>{{ i.ToolStatusID }}</td>
                   {% if i.ToolStatusID.ToolStatus == 'Available' %}
-                      <td><input type="checkbox" id="cart" name="cart" value="{{i.InventoryID}}"></td>
+                      <td><input type="checkbox" id="item" name="item" value="{{i.InventoryID}}&&~~{{ i.StoreID}}">
+                      </td>
                       {% else %}
                       <td></td>
                       {% endif %}
@@ -147,7 +149,6 @@
                 
               </tbody>
               </table>
-            </form>
           </div>
 
               <h3>Tools in Other Stores:</h3>
@@ -155,7 +156,6 @@
                 <input id="gf" type="text" 
                      placeholder="Search here"> 
                 
-                <form>
                 <table class="serialsother">
                   <tr>
                     <th>Inventory ID</th>
@@ -172,7 +172,8 @@
                       <td>{{ i.StoreID }}</td>
                       <td>{{ i.ToolStatusID }}</td>
                       {% if i.ToolStatusID.ToolStatus == 'Available' %}
-                      <td><input type="checkbox" id="cart" name="cart" value="{{ i.InventoryID }}"></td>
+                      <td><input type="checkbox" id="item" name="item" value="{{ i.InventoryID }} {{ i.StoreID }}">
+                      </td>
                       {% else %}
                       <td></td>
                       {% endif %}
@@ -182,7 +183,7 @@
                     
                 </tbody>
                 </table>
-              </form>
+
               </div>
           
               <script> 
@@ -225,7 +226,6 @@
 
       <div class="choose-rate">
         <h3>Rate</h3>
-      <form id="rental-length" action="">
           <input type="radio" id="hourly" name="rate" value="hourly" required>
           <label for="hourly">Hourly</label>
           <input type="radio" id="daily" name="rate" value="daily">
@@ -241,13 +241,17 @@
       <h3>Rental Length</h3>
       <p class="tool-description">Hourly minimum is 4 hours</p>
       <input type="number" id="length" max="10" min="1" name = "rlength" value="1"><br>
-      <input class="cart-btn" type="submit" id="submit" name="Add to cart" value="Add to cart">
-    </form>
+      <input class="cart-btn" type="submit" id="submit" name="Add to cart" value="Add To Cart">
+      {% comment %} <input type = "hidden" value = "document.getElementById('output').innerHTML = estimate_end_date()" name="end"> {% endcomment %}
+      </form>
     <button onclick="document.getElementById('output').innerHTML = estimate_end_date()" class="date-estimate">Estimate End Date</button>
     <p id="output"></p>
     <br>
-
 </div>
+<br>
+
+
+
   </main>
 {% endblock content %}
 </body>

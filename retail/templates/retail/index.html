@@ -1,14 +1,150 @@
+{% extends "retail/app_base.html" %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
-<html>
-    <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/home.css' %}" rel="stylesheet">
+    <link href="img/favicon.ico" rel="icon">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+    <title>ATSR Home</title>
+</head>
+<body>
 
-    </head>
-    <body>
-    {% extends "retail/app_base.html" %}
-    
-    {% block content %}
-        <h1 style="text-align:center;">Homepage</h1>
+    <div class="section-title">
+        <h1>Our Perfect Team!</h1>
+    </div>
 
-        {% endblock content %}
-    </body>
+    <div>
+        <p class="groupblurb">
+            <span class="subsection">Who Are We?</span><br><br>
+            We are a team of undergraduate students in Business Technology Management at Ryerson University. Each of us brought a unique perspective and an array of skills that were critical in the success of our capstone project. In our final year, we remotely balanced heavy workloads during the COVID-19 pandemic and worked tenaciously to bring our project to fruition. <br> <br>
+
+            This capstone project is based on a fictitious company, ATSR, that requested a redesign of their current system to account for the growth in their client base and provide a competitive advantage in service. Throughout this website, our proof-of-concept includes functionality for ATSR’s staff members to: view all tools in the system; create and view quotes, orders, customer accounts; and process orders.  
+
+        </p>
+    </div>
+
+     <!-- Team Start -->
+     <div class="container">
+
+        <div class="row">
+            <div class="column">
+                <div class="team-1">
+                    <div class="team-img">
+                        <img src="{% static 'images/Lauren.jpeg' %}" alt="Team Image">
+                    </div>
+                    <div class="team-content">
+                        <h2>Lauren Shver</h2>
+                        <h3>Programming Guru</h3>
+                        <p>I have previous work experience as a Data Analyst and hope to pivot to a career in Web Development. This is my first application in Django and you can visit my GitHub to view more of my work!</p>
+                        <h4>lauren.shver@ryerson.ca</h4>
+                        <div class="team-social">
+                            <a class="social-li" href="https://www.linkedin.com/in/lauren-shver/"><i class="fab fa-linkedin"></i></a>
+                            <a class="social-gh" href="https://github.com/laurenshver"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="team-1">
+                    <div class="team-img">
+                        <img src="{% static 'images/Rhea.jpg' %}" alt="Team Image">
+                    </div>
+                    <div class="team-content">
+                        <h2>Rhea Sawant</h2>
+                        <h3>Business Analyst</h3>
+                        <p> I love to travel. My goals are to travel and see as much of the world before I pursue a career in project management. I’m also hoping to travel once I start my career in hopes of it taking me to new places around the world. I am very grateful for my university experience and I am excited to graduate and continue my personal growth.</p>
+                        <h4>rhea.sawant@ryerson.ca</h4>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div> 
+            <div class="column">
+                <div class="team-1">
+                    <div class="team-img">
+                        <img src="{% static 'images/nadia.jpeg' %}" alt="Team Image">
+                    </div>
+                    <div class="team-content">
+                        <h2>Nadia Balram Roy</h2>
+                        <h3>Project Lead and Front-End Developer</h3>
+                        <p>Currently working at SPS Commerce as a Space Management Specialist. With my previous co-op experience, I am motivated to become an IT Project Manager in my career path. </p>
+                        <h4>nbalramr@ryerson.ca</h4>
+                        <div class="team-social">
+                            <a class="social-li" href="https://www.linkedin.com/in/nadiabalramroy/"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <div class="team-1">
+                    <div class="team-img">
+                        <img src="{% static 'images/Petrina.jpg' %}" alt="Team Image">
+                    </div>
+                    <div class="team-content">
+                        <h2>Petrina Vanden Top</h2>
+                        <h3>Business Analyst and SQL Server Database Administrator</h3>
+                        <p>Currently working at Desert Spring Eco-Products managing day-to-day operations of production, inventory management, outsource production facilities, coordinating global shipping, and everything in between. I enjoy the challenges of my job.</p>
+                        <h4>pvandentop@ryerson.ca</h4>
+                        <div class="team-social">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="team-1">
+                    <div class="team-img">
+                        <img src="{% static 'images/Mohammad.jpeg' %}" alt="Team Image">
+                    </div>
+                    <div class="team-content">
+                        <h2>Mohammad Rana</h2>
+                        <h3>Business Process Designer & Risk Specialist</h3>
+                        <p>Currently completing my final year of the BTM program. Looking forward to beginning my postgraduate studies in IT security and working in the IT security consulting industry.</p>
+                        <h4>mohammad1.rana@ryerson.ca</h4>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="team-1">
+                    <div class="team-img">
+                        <img src="{% static 'images/Reem.jpg' %}" alt="Team Image">
+                    </div>
+                    <div class="team-content">
+                        <h2>Reem Kaid</h2>
+                        <h3>Business Analyst and Front-End Developer</h3>
+                        <p>I'm most proud of graduating as a first generation university student. My goals are to raise awareness for diversity and gender equality amongst women within the industry. A wish of mine is to buy a farm in the countryside to grow fresh fruits and vegetables. In my spare time, I enjoy thrifting, watching films and cooking new foods.</p>
+                        <h4>reem.kaid@ryerson.ca</h4>
+                        <div class="team-social">
+                            <a class="social-li" href=https://www.linkedin.com/in/reem-kaid><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
+    {% endblock content %}
+</body>
 </html>

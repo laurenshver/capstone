@@ -38,40 +38,50 @@ li a:hover {
 }
 
 /* footer */
-.footer{
+/* .footer{
     background-color: #355070;
     color: white;
     padding: 2%;
+    display: block;
+    position: relative;
+    left:0;
+    right:0;
+    bottom: 0;
 }
 
-.fcolumn-3{
+.column-3{
     float: left;
     width: 33.33%;
     text-align: center;
 }
 
-.fcolumn-2{
-    float: left;
+.column-2{
+    float:left;
     width: 50%;
     text-align: center;
 }
   
   /* Clear floats after the columns */
-.row:after {
+/* .row:after {
     content: "";
     display: table;
     clear: both;
   }
 
-/* i{
+i{
     color: #b56576;
-} */
+}
 
 h3{
     color:#c38391;
 }
 
-p a {
+a {
     color: white;
-    text-decoration: none;
 }
+
+img {
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 250px;
+} */

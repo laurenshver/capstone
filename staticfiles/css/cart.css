@@ -32,14 +32,32 @@ img{
 }
 
 .price{
-    line-height: 200px;
-    height: 200px;
+    line-height: 150px;
+    height: 150px;
 }
 
-button{
-    background-color:#6d597a ;
+.next-page-button{
+    background-color:#355070 ;
     padding: 8px;
-    border: 1px solid #6d597a;
+    border: 1px solid #355070;
     border-radius: 6px;
     color: white;
+}
+
+.next-page-button:hover{
+    background-color: #b56576;
+}
+
+.remove-button{
+    background-color: #8e99a4;
+    padding: 8px;
+    border: 1px solid #6c757d;
+    border-radius: 6px;
+    color: white;
+}
+
+.back-button{
+    color: #355070;
+    text-decoration: none;
+    font-size: large;
 }

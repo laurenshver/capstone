@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'quote.apps.QuoteConfig',
     'order.apps.OrderConfig',
     'invoice.apps.InvoiceConfig',
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,8 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/images')
+
+CART_SESSION_ID = 'cart'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())

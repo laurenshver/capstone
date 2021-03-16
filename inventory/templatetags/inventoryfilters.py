@@ -6,7 +6,7 @@ register = Library()
 def status_filter(inventory, status):
     return inventory.filter(ToolStatusID__ToolStatus = status).filter(StoreID_id = 1).count()
 
-@register.filter
+@register.filter()
 def store_filter_count(inventory):
     return inventory.filter(StoreID_id = 1).count()
 

@@ -8,68 +8,68 @@
     {% comment %} menu bar for entire application {% endcomment %}
     <body class= menubody>
         <ul class= menubar>
-            <li class= menuitem><a href = '' >Home</a></li>
+            <li class= menuitem><a href = '/' >Home</a></li>
             <li class= menuitem><a href = "/inventory/">Inventory</a></li>
             <li class= menuitem><a href = '/customer/patron.html' >Patrons</a></li>
             <li class= menuitem><a href = '/customer/business.html' >Business</a></li>
             <li class= menuitem><a href = '/quote/' >Quotes</a></li>
             <li class= menuitem><a href = '/order/' >Orders</a></li>
             <li class= menuitem><a href = '/invoice/' >Invoices</a></li>
-            <li class= menuitem><a href = '/retail/' >Retail</a></li>
+            <li class= menuitem><a href = '/retail/retail.html' >Retail</a></li>
             <li class= menuitem><a href = '/admin/' >Admin</a></li>
-            <li id = "new-order"><a>Cart</a></li>
+            <li id = "new-order"><a href = '/cart/'>Cart</a></li>
         </ul>
 
     {% block content %}
     
     {% endblock content %}
 
-    {% comment %} <div class="footer">
+{% comment %} <footer>
+    <div class="footer">
         <div class="row">
-            <div class="fcolumn-3">
-                <h3>Site Map</h3>
+            <div class="column-3">
+                <h3>Quick Links</h3>
                 
-                <p><a href = '/order/' >Home</a></p>
-                <p><a href = "/inventory/">Inventory</a></p>
-                <p><a href = '/customer/' >Customers</a></p>
-                <p><a href = '/quote/' >Quotes</a></p>
-                <p><a href = '/order/' >Orders</a></p>
-                <p><a href = '/retail/' >Retail</a></p>
+                <p><a href="#">Help Desk</a></p>
+                <p><a href="#">Store Directory</a></p>
+                <p><a href="#">Shpping Information</a></p>
+                <p><a href="#">Tool Knowledge Repository</a></p>
+                <p><a href="#">Requests</a></p>
+                <p><a href=#>Reports</a></p>
             </div>
-            <div class="fcolumn-3">
-                <h3>ATSR HQ</h3>
+            <div class="column-3">
                 <div class="row">
-                    <div class = "fcolumn-2">
-                        <img src="{% static 'images/logo-placeholder.png' %}" alt="logo" height="200">
+                    <div class = "column-2">
+                        <img src="{% static 'images/ATSR_logo.png' %}" alt="logo" height="200">
                     </div>
-                    <div class = "fcolumn-2">
-                        <p>CEO name</p>
-                        <p>Address</p>
-                        <p>City</p>
-                        <p>Province, Postalcode</p>
-                        <p>Phone Number</p>
-                        <p>Email</p>
+                    <div class = "column-2">
+                        <h3>ATSR HQ</h3>
+                        <p>Daphne Taras</p>
+                        <p>333 Victoria Rd</p>
+                        <p>Toronto</p>
+                        <p>Ontario, M4M 9B0</p>
+                        <p>+1 800-287-7040</p>
+                        <p>inquiries@ATSR.com</p>
                     </div>
                 </div>
             </div>
-            <div class="fcolumn-3">
-                <h3>About Solution</h3>
+            <div class="column-3">
                 <div class="row">
-                    <div class = "fcolumn-2">
-                        <img src="{% static 'images/logo-placeholder.png' %}" alt=" skydive-logo" height="200">
+                    <div class = "column-2">
+                        <img src="{% static 'images/skydive_logo.png' %}" alt="skydive-logo" height="200">
                     </div>
-                    <div class = "fcolumn-2">
+                    <div class = "column-2">
+                        <h3>About Solution</h3>
                         <p><strong>BTM Capstone Project</strong>  <br> Ryerson University <br> ITM 90A/B 2020/2021</p>
                         
-                        <p><strong>Designers:</strong><br> Nadia Balram Roy <br> Reem Kaid<br> Lauren Shver</p>
+                        <p><strong>Designers:</strong><br> Nadia Balram Roy <br> Lauren Shver<br> Reem Kaid</p>
                         <a href="https://github.com/laurenshver/capstone" target="_blank"><i class="fab fa-github fa-2x"></i></a>
                         
                     </div>
                 </div>
             </div>
         </div>
-    </div> {% endcomment %}
+    </div>
+</footer> {% endcomment %}
     </body>
 </html>
-
-{% comment %} https://coolors.co/355070-6d597a-c38391-e56b6f-eaac8b colour scheme? {% endcomment %}
