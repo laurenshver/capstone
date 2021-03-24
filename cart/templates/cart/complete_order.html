@@ -1,0 +1,172 @@
+{% extends "cart/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load cartfilters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Order</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/complete_order.css' %}">
+    <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<br><br>
+    <a href="{% url 'procurement' %}" class="back-button"><i class="fas fa-chevron-left"></i> Return to Procurement Selection</a>
+    <h1>Place Order</h1>
+    <div class="row">
+        <p class="header">Order Summary</p>
+    </div>
+    <div class="row">
+        <div class="details">
+            <div class="row" style="text-align: center;">
+                <strong>Customer Information</strong><br>
+                <!-- 3 columns about patron -->
+                <div class="column-3">
+                    <p>{{ request.session.customer.name }}</p>
+                </div>
+                <div class="column-3">
+                    <p>{{ request.session.customer.contact }}</p>
+                </div>
+                <div class="column-3">
+                    <p>{{ request.session.customer.identifier }}</p>
+                </div> 
+            </div>
+            <br>
+            <div class="row" style="text-align: center;">
+                <div class="column-2">
+                    <strong>Start & End Date/Time</strong><br>
+                </div>
+                <div class="column-2">
+                    <strong>Procurement</strong><br>
+                </div>
+                <div class="row">
+                    <div class="column-4">
+                        <p style="text-decoration:underline;">Earliest Start Date</p>
+                        <p>{{ request.session.startdates|elstdate }}</p>
+                    </div>
+                    <div class="column-4">
+                        <p style="text-decoration:underline;">Latest End Date</p>
+                        <p>{{ request.session.enddates|latestdate }}</p>
+                    </div>
+                    <div class="column-4">
+                        <p>{{ request.session.procurement.type|title }}</p>
+                    </div>
+                    <div class="column-4">
+                    {% if request.session.procurement.type == 'pickup' %}
+                        <p style="text-decoration:underline;">{{ pickupaddress}}</p>
+                        <p>{{ pickupaddress.AddressID.Address}}</p>
+                        <p>{{ pickupaddress.AddressID.City }}, {{ pickupaddress.AddressID.ProvinceID.ProvinceShortName }}, {{ pickupaddress.AddressID.Country }}</p>
+                        <p>{{ pickupaddress.AddressID.PostalCode }}</p>
+                    {% else %}
+                    {% if request.session.procurement.custaddress %}
+                        <p>{{customer.AddressID.Address}}</p>
+                        <p>{{ customer.AddressID.City }}, {{ customer.AddressID.ProvinceID.ProvinceShortName }}, {{ customer.AddressID.Country }}</p>
+                        <p>{{ customer.AddressID.PostalCode }}</p>
+                    {% else %}
+                        <p>{{request.session.procurement.address.0}} {{request.session.procurement.address.1}}</p>
+                        <p>{{request.session.procurement.address.2}}, {{request.session.procurement.address.3}}, {{request.session.procurement.address.4|upper}}</p>
+                    {% endif %}
+                        
+                    {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="text-align: center;">
+                <div class="column-2">
+                    <strong>Summary of Charges</strong>
+                </div>
+                <div class="column-2">
+                    <strong>Add Order Notes</strong>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="column-4" style="text-align: left; font-weight: bold;">
+                    <p>Subtotal</p>
+                    <p>Taxes</p>
+                    <p>Procurement</p>
+                    <p>Deposit (10%)</p>
+                    {% if request.session.customer.type == 'Business' %}
+                        <p>Business Discount ({{ customer.BusinessDiscountID.BusinessDiscountPercentage }}%)</p>
+                    {% else %}
+                    {% endif %}
+                    <hr>
+                    <p>Total</p>
+                </div>
+                <div class="column-4" style="text-align: right;">
+                    <p>${{request.session.costs.subtotal}}</p>
+                    <p>${{request.session.costs.taxes}}</p>
+                    <p>{{ request.session.procurement.type|title }}</p>
+                    <p>${{request.session.costs.deposit}}</p>
+                    {% if request.session.customer.type == 'Business' %}
+                        <p style="color: red;">${{ request.session.costs.discount }}</p>
+                    {% else %}
+                    {% endif %}
+                    <hr>
+                    <p><strong>$ {{ request.session.costs.total }}</strong></p>
+                </div>
+                <div class="column-2" style="text-align: center;">
+                <form action="{% url 'create_new_order' %}" method='POST'>
+                {% csrf_token %}
+                <textarea name="ordernotes" id="ordernotes" cols="30" rows="10"></textarea>
+                
+                </div>
+            </div>
+            <button class="next-page-button" style="width: 100%;" onclick="location.href='{% url 'create_new_order' %}'" type="submit">Complete Order</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <p class="header">Order Tools</p>
+    </div>
+        {% if request.session.cart %}
+            {% for key, value in request.session.cart.items %}
+            {% for i in inventory|tool_filter:key %}
+                <div class="details">
+                    <div class="row">
+                        <div class="column-5">
+                            <img src="{{i.ToolID.ToolPicture.url}}" alt="tool"><br><br>
+                        </div>
+                        <div class="column-5">
+                            <p><strong>{{ i.ToolID.ToolName }}</strong></p>
+                            <p><strong>{{ i.ToolID.ToolBrand|upper }}</strong></p>
+                            <p><strong>Inventory ID</strong><br>{{ key }}</p>
+                            <p><strong>Store</strong><br>{{ value.store|store_name }}</p>
+                            <p><strong>Tool Condition</strong><br>{{ i.ToolConditionID }}</p>
+                        </div>
+                        <div class="column-5">
+                            <p><strong>Start Date</strong><br>{{ value.startdate }}</p>
+                            <p><strong>Start Time</strong><br>{{ value.starttime }}</p>
+                            <p><strong>End Date</strong><br>{{ value.enddate }}</p>
+                            <p><strong>End Time</strong><br>{{ value.endtime }}</p>
+                        </div>
+                        <div class="column-5">
+                            <p><strong>Rental Length</strong><br>{{ value.rentallength }}</p>
+                            <p><strong>Rental Rate</strong><br>{{ value.rate|title }}</p>
+                            {% for price in prices|price_filter:i.ToolID|get_price:value.rate %}
+                            <p><strong>Price</strong><br>{{ price }}</p>
+                        </div>
+                        <div class="column-5">
+                            <p class="price">{{price|calc_total:value.rentallength}}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+{% endblock content %}
+</body>
+
+</html>

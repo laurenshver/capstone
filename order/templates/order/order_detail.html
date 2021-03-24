@@ -1,0 +1,141 @@
+{% extends "order/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load orderfilters %}
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="{% static 'css/order_details.css' %}">
+    <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+        <h1>Order Details</h1>
+           <button onclick ="document.location='{% url 'order summary' %}'">Back to Orders</button> 
+           <h2>Order #: {{ order.OrderID }}</h2>
+            <hr/>
+              <div class="send_btn">
+              <button onclick="window.print();return false;">Print</button>
+              </div>
+            <div class="action_btn">
+              <button>Edit Order</button>
+              <button>Save Order</button>
+            </div>
+
+ 
+    <div class="main_div">
+        <div class="box1"> <fieldset>
+            <legend>Order Information</legend>
+                <table class="order_table">
+                    <tr>
+                        <th>Store:</th>
+                        <td>{{ order.EmployeeID.StoreID }}</td>
+                    </tr>
+                    <tr>
+                        <th>Customer Name:</th>
+                        <td><a href="#">Bitty Nicks</a></td> 
+                    </tr>
+                    <tr>
+                        <th>Order Status:</th>
+                        <td>{{ order.OrderStatusID }}</td>
+                    </tr>
+                    <tr>
+                        <th>Quote ID:</th>
+                        <td><a>{{ order.CustomerQuoteID }}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Start Date:</th>
+                        <td>{{ order.StartDate|date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Start Time:</th>
+                        <td>{{ order.StartDate|time }}</td>
+                    </tr>
+                    <tr>
+                        <th>Estimated End Date:</th>
+                        <td>{{ order.EstimatedEndDate|date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Estimated End Time:</th>
+                        <td>{{ order.EstimatedEndDate|time }}</td>
+                    </tr>
+                    <tr>
+                        <th>Actual End Date:</th>
+                        <td>{{ order.EndDate|date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Actual End Time:</th>
+                        <td>{{ order.EndDate|time }}</td>
+                    </tr>
+                </table>
+        </div>
+    </fieldset>
+        <div class="box"><fieldset>
+            <legend>Order Procurement</legend>
+            <table class="site_table">
+                <tr>
+                    <th>Procurement Type:</th>
+                    <td>{{ order.ToolRetreival }}</td>
+                </tr>
+                <tr>
+                    <th>Delivery ID:</th>
+                    <td>DeliveryID</td>
+                </tr>
+                <tr>
+                    <th>Delivery Agent:</th>
+                    <td>Sarah Black EmployeeID</td>
+                </tr>
+              <tr>
+                  <th>{{ order.ToolRetreival }} Address:</th>
+                  <td>{{ order.AddressID.Address }}, {{ order.AddressID.City }}, <br>{{ order.AddressID.ProvinceID.ProvinceShortName }} {{ order.AddressID.PostalCode }}</td>
+              </tr>
+              <tr>
+                <th>Order Notes:</th>
+                <td>{{ order.OrderNotes }}</td>
+                </tr>    
+              </table>
+        </div>
+        
+    </fieldset>
+        <div class="items">
+            <table class="tool-table">
+                <thead>
+                  <tr>
+                  <th>Tool Name</th>
+                  <th>Store ID</th>
+                  <th>Inventory ID</th>
+                  <th>Price</th>
+                  <th>Rental Length</th>
+                  <th>Total Cost</th>
+                  <th>Start Date</th>
+                  <th>Start Time</th>
+                  <th>End Date</th>
+                  <th>End Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for tool in ordertool %}
+                <tr>
+                    <td> <a href="#">{{ tool.InventoryID.ToolID.ToolName }}</a></td>
+                    <td>{{ tool.InventoryID.StoreID }}</td>
+                    <td>{{ tool.InventoryID.InventoryID}}</td>
+                    <td>{{ tool.ToolPriceID }}</td>
+                    <td>{{ tool.RentalLength }}</td>
+                    <td>{{tool.ToolPriceID.Price|total_cost:tool.RentalLength}}</td>
+                    <td>{{ tool.StartDate|date }}</td>
+                    <td>{{ tool.StartDate|time  }}</td>
+                    <td>{{ tool.EndDate|date }}</td>
+                    <td>{{ tool.EndDate|time }}</td>
+                  </tr>
+                {% endfor %}
+                  
+                </tbody>
+              </table>          
+        </div>
+
+    </div>
+</body>
+{% endblock content %}

@@ -20,3 +20,7 @@ def store_filter(inventory, store1):
 @register.filter
 def get_price(prices, rate):
     return prices.filter(PriceRateID__PriceRate = rate)
+
+@register.filter
+def return_string(inventoryid):
+    return str(inventoryid)

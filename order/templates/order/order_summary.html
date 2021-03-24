@@ -1,0 +1,58 @@
+{% extends "order/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load orderfilters %}
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Summary</title>
+  <link rel="stylesheet" href="{% static 'css/order_summary.css' %}">
+  <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <h1>Orders</h1>
+
+  {% comment %} <input class="search" type="search" placeholder="Search Orders..."><br> {% endcomment %}
+
+  <span class="legend">
+    <i class="fas fa-user-check fa-lg" style="color:#6d597aff"></i> Accepted
+
+    <i class="fas fa-business-time fa-lg" style="color:#6d597aff"></i> Pending
+
+    <i class="fas fa-truck fa-lg" style="color:#6d597aff"></i> Shipped
+
+    <i class="fas fa-exclamation-circle fa-lg" style="color:#6d597aff"></i> Backorder
+
+    <i class="fas fa-sort-amount-up fa-lg" style="color:#6d597aff"></i>Extended
+
+    <i class="fas fa-file-invoice-dollar fa-lg" style="color:#6d597aff"></i> Invoiced
+
+    <i class="fas fa-lock fa-lg" style="color:#6d597aff"></i> Closed
+  </span>
+    
+
+  <div class="main_div">
+  {% for order in orders %}
+    <div class="order">
+      <i class="{{ order.OrderStatusID.OrderStatus|status_icon }}"></i>
+        <p>Status: <span>{{ order.OrderStatusID }}</span></p>
+        <p>Order ID: <span>{{ order.OrderID }}</span></p>
+        {% if order.CustomerID.CustomerType.CustomerType == 'Patron' %}
+        <p>Customer: <span>{{ patron|get_patron_name:order.CustomerID }}</span></p>
+        {% else %}
+        <p>Customer: <span>{{ business|get_business_name:order.CustomerID }}</span></p>
+        {% endif %}
+        <p>Total: <span>${{ order.CostID.Total }}</span></p>
+        <a href={% url 'orderdetails' order.OrderID %} class="arrow"><i class="fas fa-chevron-right fa-lg"></i></a>
+    </div>
+  {% endfor %}
+  </div>
+
+</body> 
+
+</html>
+{% endblock content %}

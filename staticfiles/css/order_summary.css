@@ -1,0 +1,63 @@
+h1 {
+    border-bottom: 1px black dotted;
+    text-align: center;
+    color:#355070ff;
+    padding-bottom: 20px;
+}
+
+.search {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-size: 18px;
+}
+
+.legend {
+    left: 15%;
+    position:relative;
+    text-align: center;
+}
+
+.main_div {
+    display:grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.main_div > div {
+    color:#355070ff;
+    background-color: rgb(192, 191, 191);
+}
+
+div:nth-child(2n) {
+    background-color:rgba(53, 79, 112, 0.89);
+    color:rgb(192, 191, 191);
+}
+
+p {
+    padding-left: 10px;
+}
+
+p, span {
+    font-size: 18px;
+}
+
+.arrow {
+    float: right;
+    padding-right: 20px; 
+    padding-bottom: 20px;
+    color: rgb(219, 219, 219);
+}
+
+a :hover {
+    color: rgb(44, 43, 43);
+}
+
+i { 
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+tr {
+    display:inline;
+}

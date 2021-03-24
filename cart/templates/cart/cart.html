@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/cart.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
     <title>Order</title>
 </head>
 
@@ -35,13 +36,13 @@
                     <div class="row">
                         <div class="column-5">
                             <img src="{{i.ToolID.ToolPicture.url}}" alt="tool"><br><br>
-                            <button class="remove-button">Remove</button>
+                            <button class="remove-button" onclick = "location.href='{% url 'remove_from_cart' key%}'">Remove</button>
                         </div>
                         <div class="column-5">
                             <p><strong>{{ i.ToolID.ToolName }}</strong></p>
                             <p><strong>{{ i.ToolID.ToolBrand|upper }}</strong></p>
                             <p><strong>Inventory ID</strong><br>{{ key }}</p>
-                            <p><strong>Store</strong><br>{{ value.store }}</p>
+                            <p><strong>Store</strong><br>{{ value.store|store_name }}</p>
                             <p><strong>Tool Condition</strong><br>{{ i.ToolConditionID }}</p>
                         </div>
                         <div class="column-5">
@@ -72,6 +73,12 @@
         </div>
         {% endif %}
         
+
+
+
+        
+
+
         </div>
         <div class="column-4">
             <div class="details">
@@ -81,24 +88,34 @@
                         <p>Taxes</p>
                         <p>Procurement</p>
                         <p>Deposit (10%)</p>
-                        <p>Business Discount</p>
                         <hr>
-                        <p>Total</p>
+                        <p>Estimated Total</p>
                     </div>
                     <div class="column-2" style="text-align: right;">
-                        <p>$41.00</p>
+                        <p>$<span id="cart-subtotal">total</span></p>
                         <p>TBD</p>
                         <p>TBD</p>
-                        <p>$4.10</p>
-                        <p style="color: red;">$3.50</p>
+                        <p>$<span id="taxes">total</span></p>
                         <hr>
-                        <p><strong>$50.43</strong></p>
+                        <p><strong id = "est-total">xx</strong></p>
                     </div>
                 </div>
-                <button class = "next-page-button"style="width: 100%;" onclick="location.href='select_customer.html'" type="button">Assign Customer</button>
+                <form action="{% url 'assign_customer_to_order' %}" method = "POST">
+                {% csrf_token %}
+                <input type="hidden" id="hidden-subtotal" name="hidden-subtotal">
+                <button class = "next-page-button" style="width: 100%;" type="submit">Assign Customer</button>
+                </form>
+                
             </div>
         </div>
     </div>
+    
+    <script>
+        document.getElementById("cart-subtotal").innerHTML = subtotal();
+        document.getElementById("taxes").innerHTML = deposit();
+        document.getElementById("est-total").innerHTML = est_total();
+        document.getElementById("hidden-subtotal").setAttribute("value", save_total());
+    </script>
 </body>
 {% endblock content %}
 </html>

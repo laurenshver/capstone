@@ -1,0 +1,149 @@
+.main_div {
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 60px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main_div > div {
+    padding: 20px 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* font-size: 15px; */
+  }
+
+  .items {
+     grid-column: 1 / span 3; 
+  }
+  
+  fieldset {
+    background-color: rgb(252, 250, 250);
+    border: 3px solid rgb(154, 163, 158);
+  }
+
+  legend {
+    font-size: 18px;
+  }
+
+  .order_table {
+    margin-left: 50px;
+    padding-top: 20px;
+    font-size: 16px;
+  }
+
+  .order_table td {
+    padding-left: 25px;
+    padding-bottom: 20px;
+  }
+
+  .order_table th {
+    text-align: left;
+    padding-bottom: 20px;
+  }
+
+  .site_table {
+    margin-left: 50px;
+    padding-top: 20px;
+    font-size: 16px;
+  }
+
+  .site_table th {
+    text-align: left;
+    padding-bottom: 20px;
+  }
+
+  .site_table td {
+    padding-left: 25px;
+    padding-bottom: 20px;
+  }
+
+  .payment_table {
+    margin-left: 50px;
+    padding-top: 12px;
+    font-size: 16px;
+  }
+
+  .payment_table th {
+    text-align: left;
+    padding-bottom: 15px;
+  }
+
+  .payment_table td {
+    padding-left: 25px;
+    padding-bottom: 15px;
+  }
+
+  .desc {
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+  }
+  .desc1 {
+    font-size: 16px;
+    margin-left: 50px;
+  }
+
+  i {
+    padding-left: 8px;
+  }
+
+  h1 {
+    text-align: center;
+    color:#355070ff;
+  }
+  
+  button {
+    font-weight: 700;
+    border: none;
+    background-color: #355070ff;
+    color: rgb(255, 255, 255);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer; 
+    margin-left: 10px;
+  }
+
+  .send_btn {
+    float:right;
+  }
+
+  h2 {
+    text-decoration: none;
+    border-bottom: 2px soild black;
+    text-align: center;
+ }
+
+ .tool-table, .tool-table th, .tool-table td {
+  border: 1px solid rgb(179, 182, 180);
+  border-collapse: collapse;
+  text-align: center;
+ }
+
+ .tool-table {
+   width:100%;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+ }
+
+ .tool-table th {
+   padding-left: 25px; 
+   padding-right: 25px;
+   padding-top: 20px;
+   padding-bottom: 20px;
+   background-color:  rgb(203, 210, 219);
+ }
+ .tool-table td {
+  padding-left: 25px; 
+  padding-right: 25px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+ }
+
+ a {
+   color: #355070ff;
+   /* font-weight: 600; */
+ }

@@ -1,0 +1,214 @@
+{% extends "cart/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load cartfilters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Procurement</title>
+    <link rel="stylesheet" href="{% static 'css/order_procurement.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("input[type='radio']").click(function () {
+                var radioValue = $("input[name='tool-retrival']:checked").val();
+                if (radioValue == "delivery") {
+                    $("#delivery-address").toggle();
+                    $("#pickup-address").toggle(false);
+                } else {
+                    $("#pickup-address").toggle();
+                    $("#delivery-address").toggle(false);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+<br><br>
+    <a href="{% url 'select_customer' custID=request.session.customer.id rating=request.session.customer.rating type=request.session.customer.type name=request.session.customer.name contact=request.session.customer.contact identifier=request.session.customer.identifier %}" class="back-button"><i class="fas fa-chevron-left"></i> Return to Customer Selection</a>
+    <h1>Order Procurement</h1>
+    <div class="row">
+        <div class="column-2">
+            <p class="header">Retreival Type</p>
+        </div>
+        <div class="column-2">
+            <p class="header">Order Summary</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column-2">
+            <div class="details">
+                <p class="detail-header">Delivery or Pickup?</p>
+                <div class="procurement">
+                    <form action="{% url 'review_order' %}" method='POST'>
+                    {% csrf_token %}
+                        <div class="column-2">
+                        <input type="radio" name="tool-retrival" id="delivery" value="delivery" required>
+                        <label for="delivery">Delivery</label><br>
+                        </div>
+                        <input type="radio" name="tool-retrival" id="pickup" value="pickup">
+                        <label for="pickup">Pickup In Store</label><br>
+                </div>
+            </div>
+            <!-- delivery address form toggle-->
+            <div id="delivery-address">
+                <div class="row">
+                    <div>
+                        <div class="details">
+                            <p class="detail-header">Delivery Address</p><br>
+                                <label for="customer-address">Use Customer Address</label>
+                                <input type="checkbox" name="customer-address" id="customer-address"><br>
+                                {% if customer.AddressID.AptSuite %}
+                                <p> {{ customer.AddressID.AptSuite }} {{ customer.AddressID.Address }}<br>
+                                {{ customer.AddressID.City }}, {{ customer.AddressID.ProvinceID.ProvinceShortName }} <br>
+                                {{ customer.AddressID.PostalCode }} </p>
+                                {% else %}
+                                <p>{{ customer.AddressID.Address }}<br>
+                                {{ customer.AddressID.City }}, {{ customer.AddressID.ProvinceID.ProvinceShortName }} <br>
+                                {{ customer.AddressID.PostalCode }} </p>
+                                {% endif %}
+                                
+                                <p class="detail-header" style="color: red;">or</p>
+                                <input type="text" name="address" id="apartment" placeholder="Apt, Suite, etc."><br>
+                                <input type="text" name="address" id="address" placeholder="123 Easy Street"><br>
+                                <input type="text" name="address" id="city" placeholder="City"><br>
+                                <select name="address" id="province"><br>
+                                    <option value="" selected disabled hidden>Select Province</option>
+                                    <option value="AB">Alberta</option>
+                                    <option value="BC">British Columbia</option>
+                                    <option value="MB">Manitoba</option>
+                                    <option value="NB">New Brunswick</option>
+                                    <option value="NL">Newfoundland and Labrador</option>
+                                    <option value="NS">Nova Scotia</option>
+                                    <option value="ON">Ontario</option>
+                                    <option value="PE">Prince Edward Island</option>
+                                    <option value="QC">Quebec</option>
+                                    <option value="SK">Saskatchewan</option>
+                                    <option value="NT">Northwest Territories</option>
+                                    <option value="NU">Nunavut</option>
+                                    <option value="YT">Yukon</option>
+                                </select><br>
+                                <input type="text" name="address" id="postalcode" placeholder="Postal Code"><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- display pickup address toggle -->
+            <div id="pickup-address">
+                <div class="row">
+                    <div>
+                        <div class="details">
+                            <p class="detail-header">Pickup Address</p><br>
+                            <div class="row">
+                                <div class="column-2">
+                                {% for a in pickup %}
+                                <input type="radio" name="pickup-location" id="pickup-location" value="{{a.StoreID}}"><strong>{{ a }}</strong></input>
+                                {% if a.AddressID.AptSuite != None %}
+                                <p> {{ a.AddressID.AptSuite }} {{ a.AddressID.Address }}</p>
+                                {% else %}
+                                <p>{{ a.AddressID.Address }}</p>
+                                {% endif %}
+                                <p>{{ a.AddressID.City }}, {{ a.AddressID.ProvinceID.ProvinceShortName }}</p>
+                                <p>{{ a.AddressID.PostalCode }}</p>
+                                {% if a.PhoneNumberID.Extension != None %}
+                                <p>{{ a.PhoneNumberID.PhoneNumber }} ext. {{ a.PhoneNumberID.Extension }}</p>
+                                {% else %}
+                                <p>{{ a.PhoneNumberID.PhoneNumber }}</p>
+                                {% endif %}
+                                
+                            {% endfor %}
+                                </div>
+                            </div>
+                            
+                                
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column-2">
+            <div class="details">
+                <div class="row" style="text-align: center;">
+                    <strong>Customer Information</strong><br>
+                    <!-- 3 columns about patron -->
+                    <div class="column-3">
+                        <p>{{ request.session.customer.name }}</p>
+                    </div>
+                    <div class="column-3">
+                        <p>{{ request.session.customer.contact }}</p>
+                    </div>
+                    <div class="column-3">
+                        <p>{{ request.session.customer.identifier }}</p>
+                    </div> 
+                </div>
+                <br>
+                <div class="row" style="text-align: center;">
+                    <strong>Start & End Dates</strong><br>
+                    <div class="column-2">
+                        <p style="text-decoration:underline;">Earliest Start Date</p>
+                        <p>{{ sdate|elstdate }}</p>
+                    </div>
+                    <div class="column-2">
+                        <p style="text-decoration:underline;">Latest End Date</p>
+                        <p>{{ edate|latestdate }}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="row" style="text-align: center;">
+                    <strong>Number Tools in Order</strong><br>
+                    <p>{{ sdate|length }}</p>
+                </div>
+                <div class="row">
+                    <div class="column-2" style="text-align: left; font-weight: bold;">
+                        <p>Subtotal</p>
+                        <p>Taxes</p>
+                        <p>Procurement</p>
+                        <p>Deposit (10%)</p>
+                        {% if request.session.customer.type == 'Business' %}
+                            <p>Business Discount ({{ customer.BusinessDiscountID.BusinessDiscountPercentage }}%)</p>
+                        {% else %}
+                        {% endif %}
+                        
+                        <hr>
+                        <p>Total</p>
+                    </div>
+                    <div class="column-2" style="text-align: right;">
+                        <p>${{ request.session.subtotal }}</p>
+                        <input type="hidden" name="hidden-subtotal" value ="{{request.session.subtotal}}">
+                        <p>${{request.session.subtotal|order_taxes}}</p>
+                        <input type="hidden" name="hidden-taxes" value ="{{request.session.subtotal|order_taxes}}">
+                        <p>TBD</p>
+                        <p>${{request.session.subtotal|order_deposit}}</p>
+                        <input type="hidden" name="hidden-deposit" value ="{{request.session.subtotal|order_deposit}}">
+                        {% if request.session.customer.type == 'Business' %}
+                            <p style="color: red;">{{ request.session.subtotal|get_discount:customer.BusinessDiscountID.BusinessDiscountPercentage }}</p>
+                            <input type="hidden" name="hidden-businessdiscount" value ="{{ request.session.subtotal|get_discount:customer.BusinessDiscountID.BusinessDiscountPercentage }}">
+                            <hr>
+                            <p><strong>${{ request.session.subtotal|get_order_total:customer.BusinessDiscountID.BusinessDiscountPercentage }}</strong></p>
+                            <input type="hidden" name="hidden-total" value ="{{ request.session.subtotal|get_order_total:customer.BusinessDiscountID.BusinessDiscountPercentage }}">
+                        {% else %}
+                            <hr>
+                            <p><strong>${{ request.session.subtotal|get_order_total}}</strong></p>
+                            <input type="hidden" name="hidden-total" value ="{{ request.session.subtotal|get_order_total}}">
+                        {% endif %}
+                        
+                        
+                    </div>
+                </div>
+                <button class="next-page-button" style="width: 100%;" onclick="location.href='{% url 'review_order' %}'" type="submit">Review Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+</body>
+
+</html>

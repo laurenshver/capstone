@@ -1,0 +1,169 @@
+{% extends "cart/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load string_multiply %}
+{% load cartfilters %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Customer</title>
+    <link rel="stylesheet" href="{% static 'css/select_customer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script>
+        function myFunction() {
+            var input = document.getElementById("search");
+            var filter = input.value.toLowerCase();
+            var x = document.getElementsByClassName('target');
+            var nodes = document.getElementsByClassName('target');
+
+            for (i = 0; i < nodes.length; i++) {
+                if (nodes[i].innerText.toLowerCase().includes(filter)) {
+                    nodes[i].style.display = "block";
+                } else {
+                    nodes[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+<br><br>
+    <a href="/cart" class="back-button"><i class="fas fa-chevron-left"></i> Return to Cart</a>
+    <h1>Select Customer</h1>
+    <div class="row">
+        <div class="column-8" style="visibility: hidden;">hidden</div>
+        <div class="column-three-q">
+            <p class="header">Selected Customer</p>
+            
+            {% if request.session.customer %}
+                <div class="details">
+                    <div class="row" style="text-align: center;">
+                        <div class="column-5">
+                            <p>{{request.session.customer.name}}</p>
+                        </div>
+                        <div class="column-5">
+                            <p>{{ request.session.customer.contact }}</p>
+                        </div>
+                        <div class="column-5">
+                            <p>{{ request.session.customer.identifier }}
+                            {% if request.session.customer.type == 'Business' %}
+                                <br> Project Manager </p>
+                            {% else %}
+                                </p>
+                            {% endif %}
+                            
+                        </div>
+                        <div class="column-5">
+                            <p>
+                                {% filter multiply:request.session.customer.rating %}
+                                <span class="fa fa-star checked"></span>
+                                {% endfilter %}
+                                {% filter unchecked:request.session.customer.rating %}
+                                <span class="fa fa-star unchecked"></span>
+                                {% endfilter %}
+                            </p>
+                        </div>
+                        <div class="column-5">
+                            <br>
+                            <button class="next-page-button" onclick="location.href='{% url 'procurement' %}'" type="button">Select Procurement</button>
+                        </div>
+                    </div>
+                </div>
+                <a class="back-button" style="text-align: center;font-size: small;" href={% url 'remove_customer' %}>Unselect Customer</a>
+            {% else %}
+            <p style="text-align:center;">Assign Customer to Order by clicking "Select Customer"</p>
+            {% endif %}
+            
+            <br><br><br>
+            <p class="header">Customer Search</p>
+            <form class="searchform">
+                <input type="search" name="search" id="search" class="searchbox">
+                <button type="submit" class="searchbutton"><i class="fa fa-search"></i></button>
+            </form>
+
+            <br>
+            
+
+            <div class="details">
+            {% for customer in customers  %}
+                {% if customer.CustomerType.CustomerType == "Patron" %}
+                    {% for patron in patrons|get_patron_details:customer.CustomerID %}
+                        <div class="row" style="text-align: center; border-bottom: 1px #e9ecef solid;">
+                            <div class="column-5">
+                                <p>{{ patron }}</p>
+                            </div>
+                            <div class="column-5">
+                                {% for number in patronnumbers|get_phone_number:patron.PatronID %}
+                                    <p>{{ number.PhoneNumberID.PhoneNumber }}</p>
+                                <br>
+                            </div>
+                            <div class="column-5">
+                                <p>{{ patron.AddressID.PostalCode }}</p>
+                            </div>
+                            <div class="column-5">
+                                <p>
+                                {% filter multiply:customer.CustomerRating %}
+                                <span class="fa fa-star checked"></span>
+                                {% endfilter %}
+                                {% filter unchecked:customer.CustomerRating %}
+                                <span class="fa fa-star unchecked"></span>
+                                {% endfilter %}
+                                </p>
+                            </div>
+                            <div class="column-5">
+                                <br>
+                                <button class="select-customer-button" onclick = "location.href='{% url 'select_customer' custID=customer.CustomerID rating=customer.CustomerRating type=customer.CustomerType.CustomerType name=patron contact=number.PhoneNumberID.PhoneNumber identifier=patron.AddressID.PostalCode %}'">Select Customer</button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                        {% for business in businesses|get_business_details:customer.CustomerID %}
+                        <div class="row" style="text-align: center; border-bottom: 1px #e9ecef solid;">
+                            <div class="column-5">
+                                <p>{{business.BusinessName}}</p>
+                            </div>
+                            <div class="column-5">
+                            {% for contact in businesscontact|primary_contact:business.BusinessID %}
+                                <p>{{ contact.FirstName }} {{ contact.LastName }}</p>
+                            </div>
+                            <div class="column-5">
+                                <p>{{ contact.PhoneNumberID.PhoneNumber }} <br> {{ contact.BusinessContactRoleID }}</p>
+                            </div>
+                            
+                            <div class="column-5">
+                                <p>
+                                {% filter multiply:customer.CustomerRating %}
+                                <span class="fa fa-star checked"></span>
+                                {% endfilter %}
+                                {% filter unchecked:customer.CustomerRating %}
+                                <span class="fa fa-star unchecked"></span>
+                                {% endfilter %}
+                                </p>
+                            </div>
+                            <div class="column-5">
+                                <br>
+                                <button class="select-customer-button" onclick = "location.href='{% url 'select_customer' custID=customer.CustomerID rating=customer.CustomerRating type=customer.CustomerType.CustomerType name=business.BusinessName contact=contact identifier=contact.PhoneNumberID.PhoneNumber %}'">Select Customer</button>
+                            </div>
+                        </div>
+                {% endfor %}
+                {% endfor %}
+            {% endif %}
+            {% endfor %}
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="column-8" style="visibility: hidden;">hidden</div>
+    </div>
+    {% endblock content %}
+</body>
+
+</html>

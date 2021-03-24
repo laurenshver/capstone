@@ -1,6 +1,6 @@
 h1{
-   color: #355070;
-   text-align: center;
+    color: #355070;
+    text-align: center;
 }
 
 .header{
@@ -14,6 +14,13 @@ h1{
     color: #355070;
     background-color: #f8f9fa;
 }
+.detail-header{
+    text-align: center;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    margin:2px;
+}
 
 .details{
     border: 1px #e9ecef solid;
@@ -21,6 +28,23 @@ h1{
     padding: 15px;
     margin: 5px;
     background-color: #f8f9fa;
+}
+
+.next-page-button{
+    background-color:#355070 ;
+    padding: 8px;
+    border: 1px solid #355070;
+    border-radius: 6px;
+    color: white;
+}
+
+.next-page-button:hover{
+    background-color: #b56576;
+}
+
+textarea{
+    width: 80%;
+    resize: none;
 }
 
 img{
@@ -37,25 +61,11 @@ img{
     height: 150px;
 }
 
-.next-page-button{
-    background-color:#355070 ;
-    padding: 8px;
-    border: 1px solid #355070;
-    border-radius: 6px;
-    color: white;
+.column-8 {
+    float: left;
+    width: 12.5%;
 }
 
-.next-page-button:hover{
-    background-color: #b56576;
-}
-
-.remove-button{
-    background-color: #8e99a4;
-    padding: 8px;
-    border: 1px solid #6c757d;
-    border-radius: 6px;
-    color: white;
-}
 
 .back-button{
     color: #355070;

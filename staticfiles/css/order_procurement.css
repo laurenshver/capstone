@@ -1,0 +1,106 @@
+h1{
+    color: #355070;
+    text-align: center;
+}
+
+.header{
+    text-align: center;
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    background-color: #f8f9fa;
+}
+.detail-header{
+    text-align: center;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    margin:2px;
+}
+
+.details{
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    background-color: #f8f9fa;
+}
+
+form{
+    text-align: center;
+}
+
+.procurement input[type="radio"] {
+opacity: 0;
+position: fixed;
+width: 0;
+}
+
+.procurement label {
+display: inline-block;
+background-color:#355070 ;
+padding: 8px;
+border: 1px solid #355070;
+border-radius: 6px;
+color: white;
+}
+
+.procurement label:hover {
+    background-color: #b56576;;
+}
+
+.procurement input[type="radio"]:checked + label {
+    background-color: #e56b6f;
+    border-color: #b56576;
+}
+
+input[type=text]{
+    height: 25px;
+    width: 80%;
+    margin: 5px;
+}
+
+select{
+    height: 31px;
+    width: 81%;
+    margin: 5px;
+}
+
+.address-label label{
+    text-align: right;
+    
+}
+
+input[type=submit]{
+    background-color:#355070 ;
+    padding: 8px;
+    border: 1px solid #355070;
+    border-radius: 6px;
+    color: white;
+}
+
+#delivery-address, #pickup-address{
+    display: none;
+}
+
+.next-page-button{
+    background-color:#355070 ;
+    padding: 8px;
+    border: 1px solid #355070;
+    border-radius: 6px;
+    color: white;
+}
+
+.next-page-button:hover{
+    background-color: #b56576;
+}
+
+.back-button{
+    color: #355070;
+    text-decoration: none;
+    font-size: large;
+}

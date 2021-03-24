@@ -139,11 +139,11 @@
                   <td>{{ i.StoreID }}</td>
                   <td>{{ i.ToolStatusID }}</td>
                   {% if i.ToolStatusID.ToolStatus == 'Available' %}
-                      <td><input type="checkbox" id="item" name="item" value="{{i.InventoryID}}&&~~{{ i.StoreID}}">
-                      </td>
-                      {% else %}
-                      <td></td>
-                      {% endif %}
+                    <td><input type="checkbox" id="item" name="item" value="{{ i.InventoryID }}&&~~{{ i.StoreID.StoreID }}">
+                    </td>
+                  {% else %}
+                    <td></td>
+                  {% endif %}
                 </tr>
                 {% endfor %}
                 
@@ -172,10 +172,10 @@
                       <td>{{ i.StoreID }}</td>
                       <td>{{ i.ToolStatusID }}</td>
                       {% if i.ToolStatusID.ToolStatus == 'Available' %}
-                      <td><input type="checkbox" id="item" name="item" value="{{ i.InventoryID }} {{ i.StoreID }}">
-                      </td>
+                          <td><input type="checkbox" id="item" name="item" value="{{ i.InventoryID }}&&~~{{ i.StoreID.StoreID }}">
+                          </td>
                       {% else %}
-                      <td></td>
+                        <td></td>
                       {% endif %}
                       
                     </tr>
@@ -185,30 +185,6 @@
                 </table>
 
               </div>
-          
-              <script> 
-                $(document).ready(function() { 
-                    $("#gfg").on("keyup", function() { 
-                        var value = $(this).val().toLowerCase(); 
-                        $("#items tr").filter(function() { 
-                            $(this).toggle($(this).text() 
-                            .toLowerCase().indexOf(value) > -1) 
-                        }); 
-                    }); 
-                }); 
-            </script>
-            
-            <script> 
-              $(document).ready(function() { 
-                  $("#gf").on("keyup", function() { 
-                      var value = $(this).val().toLowerCase(); 
-                      $("#item tr").filter(function() { 
-                          $(this).toggle($(this).text() 
-                          .toLowerCase().indexOf(value) > -1) 
-                      }); 
-                  }); 
-              }); 
-          </script>
             
         </div>
 
@@ -236,21 +212,36 @@
           <label for="monthly">Monthly</label><br>
       </div><br>
       <h3>Start Date & Time</h3>
-        <input type="datetime-local" id="start" name="start" required>
+        <input type="datetime-local" id="startrental" name="start">
+        <script>
+            var today = new Date();
+            var dd = today.getDate();
+            var d2 = today.getDate() + 3;
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10){
+                    dd='0'+dd
+                } 
+                if(mm<10){
+                    mm='0'+mm
+                } 
+
+            today = yyyy+'-'+mm+'-'+dd+'T07:00:00';
+            week = yyyy+'-'+mm+'-'+d2+'T17:00:00';
+            document.getElementById("startrental").setAttribute("min", today);
+            document.getElementById("startrental").setAttribute("max", week);
+         </script>
       <br>
       <h3>Rental Length</h3>
       <p class="tool-description">Hourly minimum is 4 hours</p>
       <input type="number" id="length" max="10" min="1" name = "rlength" value="1"><br>
       <input class="cart-btn" type="submit" id="submit" name="Add to cart" value="Add To Cart">
-      {% comment %} <input type = "hidden" value = "document.getElementById('output').innerHTML = estimate_end_date()" name="end"> {% endcomment %}
       </form>
     <button onclick="document.getElementById('output').innerHTML = estimate_end_date()" class="date-estimate">Estimate End Date</button>
     <p id="output"></p>
     <br>
 </div>
 <br>
-
-
 
   </main>
 {% endblock content %}
