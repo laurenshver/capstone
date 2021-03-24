@@ -72,22 +72,22 @@
                             <p>{{ business.BusinessName }}</p>
                         </div>
                         <div class="column-5">
-                            <p>{{business.FirstName}} {{ business.LastName }}</p>
+                            <p>{{ business|primarycontact }}</p>
                         </div>
                         <div class="column-5">
                         <p>
                         {% if business.Extension %}
                             {{business.PhoneNumber}} ext. {{ business.Extension }}
                         {% else %}
-                            {{business.PhoneNumber}}
-                        {% endif %}<br>{{ business.BusinessContactRole }} </p>
+                           {{ business|primarycontact_number }}
+                        {% endif %}<br>{{ business|primarycontact_role }} </p>
                         </div>
                         <div class="column-5">
                             <p>
-                            {% filter multiply:business.CustomerRating %}
+                            {% filter multiply:business.CustomerID.CustomerRating %}
                             <span class="fa fa-star checked"></span>
                             {% endfilter %}
-                            {% filter unchecked:business.CustomerRating %}
+                            {% filter unchecked:business.CustomerID.CustomerRating %}
                             <span class="fa fa-star unchecked"></span>
                             {% endfilter %}
                             </p>
