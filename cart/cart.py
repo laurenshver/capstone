@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 import calendar
 
 def get_start_date(startdate):
@@ -56,3 +56,9 @@ def get_end_time(startdate, rate, length):
         else:
             array.append("5:00 PM")
     return array
+
+def start_date_and_time(date):
+    return datetime.combine(date, time(7, 00))
+
+def end_date_and_time(date):
+    return datetime.combine(date, time(17, 00))

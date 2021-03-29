@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from django.template import loader
 from customer.models import *
+from order.models import Order
 from django.views.generic.detail import DetailView
 
 # Create your views here.
@@ -18,6 +19,8 @@ class PatronDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         context['phone_numbers'] = PatronPhoneNumbers.objects.all().filter(PatronID=self.kwargs['pk'])
+        p = Patron.objects.get(PatronID=self.kwargs['pk'])
+        context['orders'] = Order.objects.all().filter(CustomerID_id = p.CustomerID_id)
         return context
 
 
@@ -32,4 +35,6 @@ class BusinessDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         context['contacts'] = BusinessContact.objects.all().filter(BusinessID=self.kwargs['pk'])
+        b = Business.objects.get(BusinessID = self.kwargs['pk'])
+        context['orders'] = Order.objects.all().filter(CustomerID_id = b.CustomerID_id)
         return context

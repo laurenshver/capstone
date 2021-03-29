@@ -81,7 +81,7 @@ class Order(models.Model):
     ModifiedDate = models.DateField(auto_now=True)
 
     def __str__(self):
-        return str(self.CustomerID) + " " + str(self.OrderStatusID.OrderStatus)
+        return str(self.OrderID)
 
 
 class OrderTool(models.Model):
@@ -107,7 +107,7 @@ class OrderDelivery(models.Model):
     OrderID = models.ForeignKey(Order, on_delete=models.CASCADE)
     EmployeeID = models.ForeignKey(Employee, on_delete=models.CASCADE)
     DeliveryStatusID = models.ForeignKey(DeliveryStatus, on_delete=models.CASCADE)
-    InventoryID = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    # InventoryID = models.ForeignKey(Inventory, on_delete=models.CASCADE)
     DeliveryDate = models.DateTimeField(blank = True, null = True)
 
     def __str__(self):

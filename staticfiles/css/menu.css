@@ -37,6 +37,15 @@ li a:hover {
     background-color: #c38391;
 }
 
+#new-invoice{
+    float: right;
+    background-color: #41628b;
+}
+
+#new-invoice a:hover{
+    background-color: #4e76a6;
+}
+
 /* footer */
 /* .footer{
     background-color: #355070;

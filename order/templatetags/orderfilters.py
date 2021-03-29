@@ -27,3 +27,23 @@ def status_icon(status):
 @register.filter
 def total_cost(price, length):
     return price*length
+
+@register.filter
+def patron_name(custID):
+    x = Patron.objects.get(CustomerID_id = custID)
+    return x
+
+@register.filter
+def business_name(custID):
+    x = Business.objects.get(CustomerID_id = custID)
+    return x
+
+@register.filter
+def patron_id(custID):
+    x = Patron.objects.get(CustomerID_id = custID)
+    return int(x.PatronID)
+
+@register.filter
+def business_id(custID):
+    x = Business.objects.get(CustomerID_id = custID)
+    return int(x.BusinessID)

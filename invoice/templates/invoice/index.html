@@ -1,6 +1,7 @@
 {% extends "invoice/app_base.html" %}
 {% load static %}
 {% block content %}
+{% load invoicefilters %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +39,7 @@
         <div class="column-8" style="visibility: hidden;">hidden</div>
         <div class="column-three-q">
             <form action="#" class="searchform">
-                <input type="search" name="search" id="search" class="searchbox" onkeyup="myFunction()" placeholder="Search Invoices">
+                <input type="search" name="search" id="search" class="searchbox" placeholder="Search Invoices">
                 <button type="submit" class="searchbutton"><i class="fa fa-search"></i></button>
             </form>
         </div>
@@ -62,32 +63,36 @@
             </table>
 
             <!-- invoice loop start -->
-            <div class="target">
+            {% for invoice in invoices %}
                 <div class="details">
                     <div class="row" style="text-align: center;">
 
                         <div class="column-5">
-                            <p>InvoiceID</p>
+                            <p>{{ invoice.InvoiceID }}</p>
                         </div>
                         <div class="column-5">
-                            <p>FirstName LastName</p>
+                            <p>{{ invoice.CustomerID.CustomerID|selected_customer_name }}</p>
                         </div>
                         <div class="column-5">
-                            <p>Total</p>
+                            <p>${{ invoice.CostID.Total }}</p>
                         </div>
                         <div class="column-5">
-                            <p>Due Date</p>
+                            <p>{{ invoice.DueDate }}</p>
                         </div>
-                        <div class="column-5" style="text-align: right;">
-                            <br>
-                            <a href="invoice_details.html"><i class="fas fa-chevron-right"></i></a>
-                        </div>
+                        <a href="{% url 'new invoice' invoice.pk%}">
+                            <div class="column-5" style="text-align: right;">
+                                <br>
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                        </a>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
+                
+
             <!-- invoice loop end -->
 
-            <div class="target">
+            {% comment %} <div class="target">
                 <div class="details">
                     <div class="row" style="text-align: center;">
 
@@ -109,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> {% endcomment %}
 
 
         </div>

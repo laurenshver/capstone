@@ -1,0 +1,193 @@
+{% extends "invoice/app_base.html" %}
+{% load static %}
+{% block content %}
+{% load invoicefilters %}
+{% expiry as expiry %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Orders</title>
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+    <link rel="stylesheet" href="{% static "css/select_order.css" %}">
+    <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script>
+        function orderTotal(classname) {
+            var nodes = document.getElementsByClassName(classname);
+            var sum = 0;
+            for (i = 0; i < nodes.length; i++) {
+                sum = sum + parseFloat(nodes[i].textContent);
+
+            }
+
+            return sum.toFixed(2);
+        }
+    </script>
+</head>
+
+<body>
+<br><br>
+    <a href="#" class="back-button"><i class="fas fa-chevron-left"></i> Return to Orders</a>
+    <h1>Select Orders</h1>
+    
+    <div class="row">
+        <div class="column-three-q">
+            <p class="header">Selected Orders</p>
+        </div>
+        <div class="column-4">
+            <p class="header">Cost Summary</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column-three-q">
+        {% if request.session.orders %}
+        <table>
+            <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Order Total</th>
+            <th>Start Date <br> Est. End Date</th>
+            <th></th>
+            </tr>
+            </table>
+            <!-- selected order loop -->
+            {% for key,value in request.session.orders.items %}
+            {% for x in key|selected_order_object %}
+            <div class="details">
+                <div class="row" style="text-align: center;">
+                    <div class="column-5">
+                        <p><a class="back-button" href={% url 'orderdetails' x.OrderID %}>{{ x.OrderID }}</a></p>
+                    </div>
+                    <div class="column-5">
+                        <p>{{ value.cust|selected_customer_name }}</p>
+                    </div>
+                    <div class="column-5">
+                        <!-- cost details -->
+                        <p class="order-total">{{ x.CostID.Total }}</p>
+                        <p hidden></p>
+                        
+                    </div>
+                    <div class="column-5">
+                        <p>{{ x.StartDate|date }} <br>{{ x.EstimatedEndDate|date }}</p>
+                    </div>
+                    <div class="column-5">
+                        <br>
+                        <button class="select-customer-button" onclick="location.href='{% url 'removeorder' key %}'">Remove</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% else %}
+            <p style="text-align:center;">Add an Order to Your Invoice</p>
+            {% endif %}
+            <!-- end of selected order loop -->
+
+            <!-- order search -->
+            <br><br><br>
+            <p class="header">Order Search</p>
+            <form action="#" class="searchform">
+                <input type="search" name="search" id="search" class="searchbox">
+                <button type="submit" class="searchbutton"><i class="fa fa-search"></i></button>
+            </form> 
+            <table>
+            <tr>
+            <th>Order ID</th>
+            <th>Customer Name</th>
+            <th>Order Total</th>
+            <th>Start Date <br> Est. End Date</th>
+            <th></th>
+            </tr>
+            </table>
+            {% if orders|length == 0 %}
+            <p style="text-align:center;">No More Orders <br> To Create an Order, Visit <a href= "{% url 'tool catalogue' %}">Inventory</a></p>
+            {% endif %}
+            {% for order in orders %}
+            <div>
+                <div class="details">
+                    <div class="row" style="text-align: center;">
+
+                        <div class="column-5">
+                            <p><a class="back-button" href={% url 'orderdetails' order.OrderID %}>{{ order.OrderID }}</a></p>
+                        </div>
+                        <div class="column-5">
+                            <p>{{order.CustomerID.CustomerID|customer_name:order.CustomerID.CustomerType.CustomerType}}</p>
+                        </div>
+                        <div class="column-5">
+                            <p>${{ order.CostID.Total }}</p>
+                        </div>
+                        <div class="column-5">
+                            <p>{{ order.StartDate|date }} <br>{{ order.EstimatedEndDate|date }}</p>
+                        </div>
+                        <div class="column-5">
+                            <button class="next-page-button" onclick="location.href='{% url 'addinvoice' order.OrderID order.CustomerID.CustomerID %}'">Add to Invoice</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% comment %} {% endif %} {% endcomment %}
+
+        </div>
+
+        <!-- cost summary -->
+        <div class="column-4">
+            <div class="details">
+                <div class="row">
+                    <div class="column-2" style="text-align: left; font-weight: bold;">
+                        <p>Due Date</p>
+                        <p>Subtotal</p>
+                        <p>Taxes</p>
+                        <p>Deposit (10%)</p>
+                        {% if request.session|cust_type == 'Business' %}
+                        <p>Business Discount</p>
+                        {% endif %}
+                        <hr>
+                        <p>Total</p>
+                    </div>
+                    <div class="column-2" style="text-align: right;">
+                        <p>{{ expiry|date }}</p>
+                        {% if request.session.orders %}
+                            <p>${{ request.session|subtotal }}</p>
+                            <p>${{ request.session|taxes }}</p>
+                            <p>${{ request.session|deposit }}</p>
+                            {% if request.session|cust_type == 'Business'  %}
+                            <p style="color: red;">${{ request.session|discount }}</p>
+                            {% endif %}
+                            <hr>
+                            <p style="font-weight: bold;">$ {{ request.session|total }}</p>
+                        {% else %}
+                            <p>$0.00</p>
+                            <p>$0.00</p>
+                            <p>$0.00</p>
+                            <hr>
+                            <p style="font-weight: bold;">$ 0.00</p>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+                {% if request.session.orders %}
+                <form method="POST" action = "{% url 'generate invoice' %}">
+                {% csrf_token %}
+                <input type="hidden" name="subtotal" value="{{ request.session|subtotal }}">
+                <input type="hidden" name="taxes" value="{{ request.session|taxes }}">
+                <input type="hidden" name="deposit" value="{{ request.session|deposit }}">
+                {% if request.session|cust_type == 'Business'  %}
+                    <input type="hidden" name="discount" value="{{ request.session|discount }}">
+                {% endif %}
+                <input type="hidden" name="total" value="{{ request.session|total }}">
+                <button class="next-page-button" style="width: 100%;" type="submit">Generate Invoice</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <br>
+</body>
+{% endblock content %}
+</html>

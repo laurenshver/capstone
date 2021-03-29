@@ -3,7 +3,7 @@ from inventory.models import Inventory, ToolPrice, PriceRate, Tool, ToolStatus
 from customer.models import *
 from retail.models import Store, Employee
 from order.models import *
-from cart.cart import get_start_date, get_start_time, get_end_date, get_end_time
+from cart.cart import get_start_date, get_start_time, get_end_date, get_end_time, start_date_and_time, end_date_and_time
 import datetime
 from cart.templatetags.cartfilters import elstdate, latestdate
 
@@ -241,8 +241,8 @@ def create_new_order(request):
         CostID = order_costs,
         OrderStatusID = OrderStatus.objects.get(OrderStatus = 'Accepted'),
         ToolRetreival = ToolRetreival.objects.get(ToolRetreival = request.session['procurement']['type'].title()),
-        StartDate = elstdate(request.session['startdates']),
-        EstimatedEndDate = latestdate(request.session['enddates']),
+        StartDate = start_date_and_time(elstdate(request.session['startdates'])),
+        EstimatedEndDate = end_date_and_time(latestdate(request.session['enddates'])),
         TandCAccepted = 'Y',
         OrderNotes = request.POST.get('ordernotes'),
     )
@@ -251,12 +251,13 @@ def create_new_order(request):
         tool = Inventory.objects.filter(InventoryID = request.session['cart'][item]['item']).values('ToolID_id')
         price = ToolPrice.objects.get(ToolID = tool[0]['ToolID_id'], PriceRateID__PriceRate = request.session['cart'][item]['rate'].title())
 
+        # create an order tool record for all tools in the order
         OrderTool.objects.create(
             OrderID = order,
             InventoryID = Inventory.objects.get(InventoryID = item),
             ToolPriceID = price,
-            StartDate = datetime.datetime.strptime(request.session['cart'][item]['startdate'], "%b. %d %Y"),
-            EndDate = datetime.datetime.strptime(request.session['cart'][item]['enddate'], "%b. %d %Y"),
+            StartDate = start_date_and_time(datetime.datetime.strptime(request.session['cart'][item]['startdate'], "%b. %d %Y")),
+            EndDate = end_date_and_time( datetime.datetime.strptime(request.session['cart'][item]['enddate'], "%b. %d %Y")),
             RentalLength = request.session['cart'][item]['rentallength'],
         )
 
@@ -264,6 +265,21 @@ def create_new_order(request):
         i = Inventory.objects.get(InventoryID = request.session['cart'][item]['item'])
         i.ToolStatusID = ToolStatus.objects.get(ToolStatus = 'Rented')
         i.save()
+
+    # create order delivery/pickup object
+    if request.session['procurement']['type'] == 'delivery':
+        OrderDelivery.objects.create(
+            OrderID = order,
+            EmployeeID = employee,
+            DeliveryStatusID = DeliveryStatus.objects.get(id = 2)
+        )
+
+    if request.session['procurement']['type'] == 'pickup':
+        OrderPickup.objects.create(
+            OrderID = order,
+            EmployeeID = employee,
+            PickupStatusID = PickupStatus.objects.get(id = 2)
+        )
 
 
     del request.session['costs']

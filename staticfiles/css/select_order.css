@@ -1,0 +1,107 @@
+h1{
+    color: #355070;
+    text-align: center;
+}
+
+.header{
+    text-align: center;
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    background-color: #f8f9fa;
+}
+.detail-header{
+    text-align: center;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    margin:2px;
+}
+
+.details{
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    background-color: #f8f9fa;
+}
+
+.next-page-button{
+    background-color:#355070 ;
+    padding: 8px;
+    margin: 10px;
+    border: 1px solid #355070;
+    border-radius: 6px;
+    color: white;
+}
+
+.next-page-button:hover{
+    background-color: #b56576;
+}
+
+.column-8 {
+    float: left;
+    width: 12.5%;
+}
+
+.searchform{
+    margin:5px;
+    position: relative;
+    display: flex;
+}
+
+.searchbox{
+width: 97%;
+  border: 1px solid #355070;
+  border-right: none;
+  padding: 5px;
+  height: 50px;
+  border-radius: 3px 0 0 3px;
+  outline: none;
+  color: #355070;
+  font-size: x-large;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.searchbutton{
+    width: 40px;
+  height: 50px;
+  border: 1px solid #355070;
+  background: #355070;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.select-customer-button{
+    background-color:#495057 ;
+    padding: 8px;
+    border: 1px solid #495057;
+    border-radius: 6px;
+    color: white;
+}
+
+.filterButton.active{
+    background-color: #355070;
+}
+
+.back-button{
+    color: #355070;
+    text-decoration: none;
+    font-size: large;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+}

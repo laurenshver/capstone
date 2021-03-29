@@ -1,0 +1,104 @@
+h1{
+    color: #355070;
+    text-align: center;
+}
+
+.header{
+    text-align: center;
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    background-color: #f8f9fa;
+}
+.detail-header{
+    text-align: center;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #355070;
+    margin:2px;
+}
+
+.details{
+    border: 1px #e9ecef solid;
+    border-radius: 3px;
+    padding: 15px;
+    margin: 5px;
+    background-color: #f8f9fa;
+
+}
+
+.row.title{
+    text-align: center;
+    padding: 15px;
+    margin: 5px;
+}
+.row.title div p{
+    height:0;
+    font-weight: bold;
+}
+
+.back-button{
+    color: #355070;
+    text-decoration: none;
+    font-size: large;
+}
+
+
+a:link{
+    color: black;
+}
+
+a:visited i {
+    color: black;
+}
+
+a i:hover{
+    color: #b56576;
+}
+
+th{
+    height: 30px;
+}
+
+table{
+    width: 85%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+  
+td{
+    height: 40px;
+    border-bottom: #d0d2d4 1px solid;
+    border-top: #d0d2d4 1px solid;
+    
+}
+
+.invoice-details{
+    width:100%;
+    text-align: left;
+
+}
+
+.invoice-details td{
+    border: none;
+}
+
+.outstanding-balance th{
+    text-align: right;
+    /* border-bottom: 1px solid black; */
+}
+
+.outstanding-balance td{
+    border:none;
+    border-bottom: 1px solid black;
+}
+
+.outstanding-balance .bottom-line{
+    border-bottom: 4px double red;
+}

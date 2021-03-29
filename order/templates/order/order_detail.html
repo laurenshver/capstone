@@ -36,7 +36,12 @@
                     </tr>
                     <tr>
                         <th>Customer Name:</th>
-                        <td><a href="#">Bitty Nicks</a></td> 
+                        {% if  order.CustomerID.CustomerType.CustomerType == 'Patron' %}
+                        <td><a href={% url 'patrondetails' pk=order.CustomerID.CustomerID|patron_id %}>{{ order.CustomerID.CustomerID|patron_name}}</a></td> 
+                        {% else %}
+                        <td><a href={% url 'businessdetails' pk=order.CustomerID.CustomerID|business_id %}>{{ order.CustomerID.CustomerID|business_name}}</a></td> 
+                        {% endif %}
+                        
                     </tr>
                     <tr>
                         <th>Order Status:</th>
@@ -74,20 +79,46 @@
         </div>
     </fieldset>
         <div class="box"><fieldset>
-            <legend>Order Procurement</legend>
+            <legend>Order Procurement and Cost Summary</legend>
             <table class="site_table">
                 <tr>
                     <th>Procurement Type:</th>
                     <td>{{ order.ToolRetreival }}</td>
                 </tr>
+                {% if order.ToolRetreival.ToolRetreival == 'Delivery' %}
+                {% for x in delivery %}
                 <tr>
                     <th>Delivery ID:</th>
-                    <td>DeliveryID</td>
+                    <td>{{x.id}}</td>
+                </tr>
+                <tr>
+                    <th>Delivery Status:</th>
+                    <td>{{ x.DeliveryStatusID }}</td>
                 </tr>
                 <tr>
                     <th>Delivery Agent:</th>
-                    <td>Sarah Black EmployeeID</td>
+                    <td>{{ x.EmployeeID }}</td>
                 </tr>
+                {% endfor %}
+                {% endif %}
+                {% if order.ToolRetreival.ToolRetreival == 'Pickup' %}    
+                {% for x in pickup %}
+                <tr>
+                    <th>Pickup ID:</th>
+                    <td>{{ x.id }}</td>
+                </tr>
+                <tr>
+                    <th>Pickup Status:</th>
+                    <td>{{ x.PickupStatusID.PickupStatus }}</td>
+                </tr>
+                <tr>
+                    <th>Pickup Assigned To:</th>
+                    <td>{{ x.EmployeeID }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+                
+                
               <tr>
                   <th>{{ order.ToolRetreival }} Address:</th>
                   <td>{{ order.AddressID.Address }}, {{ order.AddressID.City }}, <br>{{ order.AddressID.ProvinceID.ProvinceShortName }} {{ order.AddressID.PostalCode }}</td>
@@ -96,6 +127,37 @@
                 <th>Order Notes:</th>
                 <td>{{ order.OrderNotes }}</td>
                 </tr>    
+              </table>
+              <h4 style="text-align:center;">Cost Summary</h4>
+              <table class="site_table" style="width: 90%;
+                    border-collapse: collapse;
+                    text-align: right;
+                    margin-left: auto;
+                    margin-right: auto;">
+                <tr>
+                <th>Subtotal</th>
+                <td>${{ order.CostID.Subtotal }}<td>
+                </tr>
+                <tr>
+                <th>Deposit (10%)</th>
+                <td>${{ order.CostID.Deposit }}<td>
+                </tr>
+                
+                {% if order.CostID.BusinessDiscount %}
+                <tr>
+                <th>Business Discount</th>
+                <td style="color:red;">${{ order.CostID.BusinessDiscount }}<td>
+                </tr>
+                {% else %}
+                {% endif %}
+                <tr >
+                <th style="border-bottom: 1px solid black;">Taxes</th>
+                <td style="border-bottom: 1px solid black;">${{ order.CostID.Taxes }}<td>
+                </tr>
+                <tr>
+                <th>Total</th>
+                <td><strong>${{ order.CostID.Total }}</strong><td>
+                </tr>
               </table>
         </div>
         
@@ -119,7 +181,7 @@
                 <tbody>
                 {% for tool in ordertool %}
                 <tr>
-                    <td> <a href="#">{{ tool.InventoryID.ToolID.ToolName }}</a></td>
+                    <td> <a href={% url 'tooldetails' pk=tool.InventoryID.ToolID.ToolID %}>{{ tool.InventoryID.ToolID.ToolName }}</a></td>
                     <td>{{ tool.InventoryID.StoreID }}</td>
                     <td>{{ tool.InventoryID.InventoryID}}</td>
                     <td>{{ tool.ToolPriceID }}</td>

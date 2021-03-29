@@ -366,7 +366,6 @@
             </tr>
           </table>
     </div>
-
       <div class="item3">
       <h3>Outstanding Orders</h3>
       <table class="outstanding">
@@ -375,16 +374,15 @@
           <th>Start Date/Time</th>
           <th>Estimated End Date/Time</th>
         </tr>
-        <tr>
-          <td><a href="#">1234567</a></td>
-          <td>February 15, 2021 10:00 AM</td>
-          <td>February 20, 2021, 10:00 AM</td>
-        </tr>
-        <tr>
-          <td><a href="#">8745698</a></td>
-          <td>March 01, 2021 11:00 AM</td>
-          <td>March 05, 2021, 11:00 AM</td>
-        </tr>
+        {% for order in orders %}
+          {% if not order.EndDate %}
+          <tr>
+            <td><a class="nav-link" href="{% url 'orderdetails' order.OrderID %}">{{ order.OrderID }}</a></td>
+            <td>{{order.StartDate}}</td>
+            <td>{{order.EstimatedEndDate}}</td>
+          </tr>
+          {% endif %}
+        {% endfor %}
       </table>
 
       <h3>Past Orders</h3>
@@ -394,11 +392,15 @@
           <th>Start Date/Time</th>
           <th>End Date/Time</th>
         </tr>
-        <tr>
-          <td><a href="#">2468102</a></td>
-          <td>January 10, 2020 10:00 AM</td>
-          <td>January 20, 2020, 10:00 AM</td>
-        </tr>
+        {% for order in orders %}
+          {% if order.EndDate %}
+          <tr>
+            <td><a class="nav-link" href="{% url 'orderdetails' order.OrderID %}">{{ order.OrderID }}</a></td>
+            <td>{{ order.StartDate }}</td>
+            <td>{{ order.EndDate }}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
       </table>
     </div>
   </div>
