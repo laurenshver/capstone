@@ -3,6 +3,7 @@
 <html>
     <head>
         <link rel="stylesheet" type = "text/css" href="{% static 'css/menu.css' %}">
+        <link rel="stylesheet" type = "text/css" href="{% static 'css/main.css' %}">
         <script src="https://kit.fontawesome.com/08e9ccd70e.js" crossorigin="anonymous"></script>
     </head>
     {% comment %} menu bar for entire application {% endcomment %}
@@ -17,18 +18,19 @@
             <li class= menuitem><a href = '/invoice/' >Invoices</a></li>
             <li class= menuitem><a href = '/admin/' >Admin</a></li>
             <li id = "new-order"><a href = '/cart/'>Order Cart</a></li>
-            <li id = "new-invoice"><a href = "{% url 'selectorder'%}"">Generate New Invoice</a></li>
+            <li id = "new-invoice"><a href = "{% url 'selectorder'%}">Generate New Invoice</a></li>
             
         </ul>
-
+    <div class="page-content">
     {% block content %}
     
     {% endblock content %}
-
-{% comment %} <footer>
+    </div>
+    <footer>
+    <br><br><br>
     <div class="footer">
         <div class="row">
-            <div class="column-3">
+            <div class="column-4">
                 <h3>Quick Links</h3>
                 
                 <p><a href="#">Help Desk</a></p>
@@ -36,7 +38,7 @@
                 <p><a href="#">Shpping Information</a></p>
                 <p><a href="#">Tool Knowledge Repository</a></p>
                 <p><a href="#">Requests</a></p>
-                <p><a href=#>Reports</a></p>
+                <p><a href="#">Reports</a></p>
             </div>
             <div class="column-3">
                 <div class="row">
@@ -71,6 +73,6 @@
             </div>
         </div>
     </div>
-</footer> {% endcomment %}
-    </body>
+</footer>
+</body>    
 </html>

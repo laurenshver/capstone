@@ -48,15 +48,15 @@ h1{
 }
 
 
-a:link{
+td a:link{
     color: black;
 }
 
-a:visited i {
+td a:visited i {
     color: black;
 }
 
-a i:hover{
+td a i:hover{
     color: #b56576;
 }
 

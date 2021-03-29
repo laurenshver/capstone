@@ -7,7 +7,7 @@ from customer.models import Customer, Patron, Business
 # Create your views here.
 
 def index(request):
-    invoices = Invoice.objects.all()
+    invoices = Invoice.objects.all().order_by('DueDate')
     context = {'invoices' : invoices}
     return render(request, 'invoice/index.html', context)
 

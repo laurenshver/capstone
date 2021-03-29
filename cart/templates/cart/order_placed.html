@@ -111,7 +111,7 @@
                     <pre>{{ order.OrderNotes}}</pre>
                 </div>
             </div>
-            <button class="next-page-button" style="width: 100%;">Generate an Invoice</button><br><br>
+            <button class="next-page-button" style="width: 100%;" onclick="location.href='{% url 'addinvoice' oid=order.OrderID cid=order.CustomerID.CustomerID %}'">Generate an Invoice</button><br><br>
             <button class="remove-button" style="width: 100%;" onclick="location.href='{% url 'orderdetails' order.OrderID %}'">Order Details</button>
         </div>
     </div>
