@@ -85,10 +85,10 @@
                 <div class="column-2" style="text-align: left; font-weight: bold;">
                     <p>Subtotal</p>
                     <p>Taxes</p>
-                    <p>Deposit (10%)</p>
+                    
                     {% if invoice.CostID.BusinessDiscount %}
                     <p>Business Discount</p>
-                    {% else %}
+                    {% else %}<p>Deposit (10%)</p>
                     {% endif %}
                     <hr>
                     <p>Total</p>
@@ -96,10 +96,10 @@
                 <div class="column-2" style="text-align: right;">
                     <p>$ {{ invoice.CostID.Subtotal }}</p>
                     <p>$ {{ invoice.CostID.Taxes }}</p>
-                    <p>$ {{ invoice.CostID.Deposit }}</p>
+                    
                     {% if invoice.CostID.BusinessDiscount %}
                     <p style="color:red;">$ {{ invoice.CostID.BusinessDiscount }}</p>
-                    {% else %}
+                    {% else %}<p>$ {{ invoice.CostID.Deposit }}</p>
                     {% endif %}
                     <hr>
                     <p style="font-weight: bold;">$ {{ invoice.CostID.Total }}</p>

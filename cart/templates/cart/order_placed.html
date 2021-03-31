@@ -19,7 +19,6 @@
     <h1>Order Placed!</h1>
     <div class="row">
         <p class="header">Order Summary</p>
-        <p style="text-align: center; text-decoration: underline;">Invoice must be generated within 3 business days</p>
     </div>
     <div class="row">
         <div class="details">
@@ -85,10 +84,11 @@
                     <p>Subtotal</p>
                     <p>Taxes</p>
                     <p>Procurement</p>
-                    <p>Deposit (10%)</p>
+                    
                     {% if order.CostID.BusinessDiscount %}
                     <p>Business Discount</p>
                     {% else %}
+                        <p>Deposit (10%)</p>
                     {% endif %}
                     
                     <hr>
@@ -99,10 +99,11 @@
                     <p>${{order.CostID.Subtotal}}</p>
                     <p>${{order.CostID.Taxes}}</p>
                     <p>{{ order.ToolRetreival }}</p>
-                    <p>${{order.CostID.Deposit}}</p>
+                    
                     {% if order.CostID.BusinessDiscount %}
                         <p style="color: red;">${{order.CostID.BusinessDiscount}}</p>
                     {% else %}
+                        <p>${{order.CostID.Deposit}}</p>
                     {% endif %}
                     <hr>
                     <p><strong>${{order.CostID.Total}}</strong></p>

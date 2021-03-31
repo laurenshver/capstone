@@ -16,7 +16,7 @@
             {% comment %} <li class= menuitem><a href = '/quote/' >Quotes</a></li> {% endcomment %}
             <li class= menuitem><a href = '/order/' >Orders</a></li>
             <li class= menuitem><a href = '/invoice/' >Invoices</a></li>
-            <li class= menuitem><a href = '/admin/' >Admin</a></li>
+            {% comment %} <li class= menuitem><a href = '/admin/' >Admin</a></li> {% endcomment %}
             <li id = "new-order"><a href = '/cart/'>Order Cart</a></li>
             <li id = "new-invoice"><a href = "{% url 'selectorder'%}">Generate New Invoice</a></li>
             

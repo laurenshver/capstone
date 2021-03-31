@@ -171,10 +171,11 @@
                         <p>Subtotal</p>
                         <p>Taxes</p>
                         <p>Procurement</p>
-                        <p>Deposit (10%)</p>
+                        
                         {% if request.session.customer.type == 'Business' %}
                             <p>Business Discount ({{ customer.BusinessDiscountID.BusinessDiscountPercentage }}%)</p>
                         {% else %}
+                            <p>Deposit (10%)</p>
                         {% endif %}
                         
                         <hr>
@@ -186,15 +187,16 @@
                         <p>${{request.session.subtotal|order_taxes}}</p>
                         <input type="hidden" name="hidden-taxes" value ="{{request.session.subtotal|order_taxes}}">
                         <p>TBD</p>
-                        <p>${{request.session.subtotal|order_deposit}}</p>
-                        <input type="hidden" name="hidden-deposit" value ="{{request.session.subtotal|order_deposit}}">
+                        
                         {% if request.session.customer.type == 'Business' %}
-                            <p style="color: red;">{{ request.session.subtotal|get_discount:customer.BusinessDiscountID.BusinessDiscountPercentage }}</p>
+                            <p style="color: red;">${{ request.session.subtotal|get_discount:customer.BusinessDiscountID.BusinessDiscountPercentage }}</p>
                             <input type="hidden" name="hidden-businessdiscount" value ="{{ request.session.subtotal|get_discount:customer.BusinessDiscountID.BusinessDiscountPercentage }}">
                             <hr>
                             <p><strong>${{ request.session.subtotal|get_order_total:customer.BusinessDiscountID.BusinessDiscountPercentage }}</strong></p>
                             <input type="hidden" name="hidden-total" value ="{{ request.session.subtotal|get_order_total:customer.BusinessDiscountID.BusinessDiscountPercentage }}">
                         {% else %}
+                            <p>${{request.session.subtotal|order_deposit}}</p>
+                            <input type="hidden" name="hidden-deposit" value ="{{request.session.subtotal|order_deposit}}">
                             <hr>
                             <p><strong>${{ request.session.subtotal|get_order_total}}</strong></p>
                             <input type="hidden" name="hidden-total" value ="{{ request.session.subtotal|get_order_total}}">

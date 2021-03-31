@@ -94,10 +94,11 @@
                     <p>Subtotal</p>
                     <p>Taxes</p>
                     <p>Procurement</p>
-                    <p>Deposit (10%)</p>
+                    
                     {% if request.session.customer.type == 'Business' %}
                         <p>Business Discount ({{ customer.BusinessDiscountID.BusinessDiscountPercentage }}%)</p>
                     {% else %}
+                        <p>Deposit (10%)</p>
                     {% endif %}
                     <hr>
                     <p>Total</p>
@@ -106,10 +107,11 @@
                     <p>${{request.session.costs.subtotal}}</p>
                     <p>${{request.session.costs.taxes}}</p>
                     <p>{{ request.session.procurement.type|title }}</p>
-                    <p>${{request.session.costs.deposit}}</p>
+                    
                     {% if request.session.customer.type == 'Business' %}
                         <p style="color: red;">${{ request.session.costs.discount }}</p>
                     {% else %}
+                        <p>${{request.session.costs.deposit}}</p>
                     {% endif %}
                     <hr>
                     <p><strong>$ {{ request.session.costs.total }}</strong></p>

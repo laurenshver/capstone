@@ -190,7 +190,6 @@ def create_new_order(request):
             Total= float(request.session['costs']['total']),
             Subtotal = float(request.session['costs']['subtotal']),
             Taxes = float(request.session['costs']['taxes']),
-            Deposit = float(request.session['costs']['deposit']),
             BusinessDiscount = float(request.session['costs']['discount']),
         )
     else:

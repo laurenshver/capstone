@@ -16,8 +16,7 @@ function deposit() {
 
 function est_total() {
     subt = document.getElementById("cart-subtotal").innerHTML;
-    d = deposit();
-    est = parseFloat(subt) + parseFloat(d);
+    est = parseFloat(subt);
     return "$" + est.toFixed(2);
 }
 

@@ -142,9 +142,10 @@
                         <p>Due Date</p>
                         <p>Subtotal</p>
                         <p>Taxes</p>
-                        <p>Deposit (10%)</p>
                         {% if request.session|cust_type == 'Business' %}
                         <p>Business Discount</p>
+                        {% else %}
+                            <p>Deposit (10%)</p>
                         {% endif %}
                         <hr>
                         <p>Total</p>
@@ -154,9 +155,11 @@
                         {% if request.session.orders %}
                             <p>${{ request.session|subtotal }}</p>
                             <p>${{ request.session|taxes }}</p>
-                            <p>${{ request.session|deposit }}</p>
+                            
                             {% if request.session|cust_type == 'Business'  %}
                             <p style="color: red;">${{ request.session|discount }}</p>
+                            {% else %}
+                                <p>${{ request.session|deposit }}</p>
                             {% endif %}
                             <hr>
                             <p style="font-weight: bold;">$ {{ request.session|total }}</p>
@@ -175,9 +178,11 @@
                 {% csrf_token %}
                 <input type="hidden" name="subtotal" value="{{ request.session|subtotal }}">
                 <input type="hidden" name="taxes" value="{{ request.session|taxes }}">
-                <input type="hidden" name="deposit" value="{{ request.session|deposit }}">
+                
                 {% if request.session|cust_type == 'Business'  %}
                     <input type="hidden" name="discount" value="{{ request.session|discount }}">
+                {% else %}
+                    <input type="hidden" name="deposit" value="{{ request.session|deposit }}">
                 {% endif %}
                 <input type="hidden" name="total" value="{{ request.session|total }}">
                 <button class="next-page-button" style="width: 100%;" type="submit">Generate Invoice</button>

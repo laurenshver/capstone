@@ -86,7 +86,7 @@ body{
     padding: 5px;
   }
 
-  h3 {
+  .item3 h3 {
     text-align: center;
     color: #6d597aff;
     border-bottom: 1px dotted gray;

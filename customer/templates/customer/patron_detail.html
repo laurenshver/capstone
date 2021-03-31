@@ -17,15 +17,13 @@
 <body>
   <h1 class="headline">Patron Details</h1>
 
-  <button class="backBtn" onclick = "document.location='../../patron.html'">Back to Patrons</button>
-  <button class="addbtn">Add to Order</button><br>
+  <button class="backBtn" onclick = "document.location='{% url 'patron' %}'">Back to Patrons</button>
   <h4>Last Edited By:</h4> <span id="author">Lauren Shver</span> <h4>on</h4> <span id="author">02-12-2021</span>
   <div class="grid-container">
 
     <div id="wrapper">
 
         <section>
-          <button id="editBtn" type="button">Edit Patron Details</button><br>
           <div id="editDocument">
             <h1 id="title">Basic Information</h1>
             <table class="contact-information">
@@ -97,7 +95,6 @@
     </div>
 
     <div id="wrapper1">
-      <button id="editBtn1" type="button" hidden>Edit Patron Details</button>
       <section>
         <div id="editDocument1">
           <h1 id="title">Address</h1>

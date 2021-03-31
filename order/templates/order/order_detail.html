@@ -20,10 +20,6 @@
               <div class="send_btn">
               <button onclick="window.print();return false;">Print</button>
               </div>
-            <div class="action_btn">
-              <button>Edit Order</button>
-              <button>Save Order</button>
-            </div>
 
  
     <div class="main_div">
@@ -138,22 +134,22 @@
                 <th>Subtotal</th>
                 <td>${{ order.CostID.Subtotal }}<td>
                 </tr>
-                <tr>
-                <th>Deposit (10%)</th>
-                <td>${{ order.CostID.Deposit }}<td>
+                <tr >
+                <th>Taxes</th>
+                <td>${{ order.CostID.Taxes }}<td>
                 </tr>
-                
                 {% if order.CostID.BusinessDiscount %}
                 <tr>
-                <th>Business Discount</th>
-                <td style="color:red;">${{ order.CostID.BusinessDiscount }}<td>
+                <th style="border-bottom: 1px solid black;">Business Discount</th>
+                <td style="color:red; border-bottom: 1px solid black;">${{ order.CostID.BusinessDiscount }}<td>
                 </tr>
                 {% else %}
+                    <tr>
+                    <th style="border-bottom: 1px solid black;">Deposit (10%)</th>
+                    <td style="border-bottom: 1px solid black;">${{ order.CostID.Deposit }}<td>
+                    </tr>
                 {% endif %}
-                <tr >
-                <th style="border-bottom: 1px solid black;">Taxes</th>
-                <td style="border-bottom: 1px solid black;">${{ order.CostID.Taxes }}<td>
-                </tr>
+                
                 <tr>
                 <th>Total</th>
                 <td><strong>${{ order.CostID.Total }}</strong><td>

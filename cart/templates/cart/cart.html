@@ -88,6 +88,7 @@
                         <p>Taxes</p>
                         <p>Procurement</p>
                         <p>Deposit (10%)</p>
+                        <p>Business Discount</p>
                         <hr>
                         <p>Estimated Total</p>
                     </div>
@@ -95,7 +96,8 @@
                         <p>$<span id="cart-subtotal">total</span></p>
                         <p>TBD</p>
                         <p>TBD</p>
-                        <p>$<span id="taxes">total</span></p>
+                        <p>TBD</p>
+                        <p>TBD</p>
                         <hr>
                         <p><strong id = "est-total">xx</strong></p>
                     </div>
@@ -112,7 +114,6 @@
     
     <script>
         document.getElementById("cart-subtotal").innerHTML = subtotal();
-        document.getElementById("taxes").innerHTML = deposit();
         document.getElementById("est-total").innerHTML = est_total();
         document.getElementById("hidden-subtotal").setAttribute("value", save_total());
     </script>

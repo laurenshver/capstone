@@ -98,6 +98,9 @@ def get_discount(subtotal, discount):
 def get_order_total(subtotal, discount = "0.00"):
     subt = float(subtotal)
     tax = float(order_taxes(subtotal))
-    deposit = float(order_deposit(subtotal))
+    if discount == "0.00":
+        deposit = float(order_deposit(subtotal))
+    else:
+        deposit = 0
     disc = float(get_discount(subtotal, discount))
     return "{:.2f}".format(subt + tax + deposit - disc)

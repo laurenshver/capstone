@@ -17,8 +17,7 @@
 <body>
   <h1 class="headline">Business Details</h1>
 
-  <button class="backBtn" onclick = "document.location='../../business.html'">Back to Businesses</button>
-  <button class="addbtn">Add to Order</button><br>
+  <button class="backBtn" onclick = "document.location='{% url 'business' %}'">Back to Businesses</button>
   <h4>Last Edited By:</h4> <span id="author">Lauren Shver</span> <h4>on</h4> <span id="author">02-12-2021</span>
   
   <div class="grid-container">
@@ -26,7 +25,6 @@
     <div id="wrapper">
 
         <section>
-          <button id="editBtn" type="button">Edit Business Details</button><br>
           <div id="editDocument">
             <h1 id="title">Basic Information</h1>
             <table class="contact-information">
@@ -107,7 +105,6 @@
     </div>
 
     <div id="wrapper1">
-      <button id="editBtn1" type="button" hidden>Edit Business Details</button>
       <section>
         <div id="editDocument1">
           <h1 id="title">Address</h1>
@@ -194,8 +191,6 @@
 
     <div class = "contacts">
 
-      <button id="editBtn1" type="button" hidden>Edit Business Details</button>
-
       <h1 id="title">Primary Contact Information</h1>
       {% for contact in contacts %}
       {% if contact.PrimaryContact == 'Y' %}
@@ -261,8 +256,6 @@
     </div>
 
     <div class = "contacts">
-
-        <button id="editBtn2" type="button" hidden>Edit Business Details</button>
         <section>
           <div id="editDocument2">
 
