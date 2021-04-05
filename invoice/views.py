@@ -64,7 +64,6 @@ def generate_invoice(request):
                 Subtotal = request.POST.get('subtotal'),
                 Taxes = request.POST.get('taxes'),
                 BusinessDiscount = request.POST.get('discount'),
-                Deposit = request.POST.get('deposit'),
             )
         else:
             cost = Cost.objects.create(
